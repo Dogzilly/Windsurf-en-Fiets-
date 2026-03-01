@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#080f1e">
+<title>Windsurf</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════
+   OCEAN DARK PALET
+════════════════════════════════ */
+:root {
+  --bg:       #080f1e;
+  --bg2:      #0d1a2e;
+  --bg3:      #1a2d45;
+  --teal:     #00e5c8;
+  --orange:   #ff7043;
+  --text:     #f0f6ff;
+  --muted:    #5a7a9a;
+  --storm:    #ff3b5c;
+  --strong:   #ff7043;
+  --moderate: #ffd166;
+  --good:     #00e5c8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+}
+
+/* ── NAV TABS ── */
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--bg3);
+  display: flex;
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+  color: var(--muted);
+  border: none;
+  background: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-tab.active { color: var(--teal); }
+.nav-tab-icon { font-size: 20px; line-height: 1; }
+.nav-tab-label { font-size: 10px; font-weight: 600; margin-top: 3px; letter-spacing: 0.3px; }
+
+/* ── PAGE SYSTEEM ── */
+.page { display: none; padding: 0 0 80px; }
+.page.active { display: block; }
+
+/* ── HEADER ── */
+.app-header {
+  padding: 40px 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.app-title .t { color: var(--teal); }
+.app-title .o { color: var(--orange); }
+
+.live-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--teal);
+  background: rgba(0,229,200,0.1);
+  border: 1px solid rgba(0,229,200,0.25);
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* ── WATERTEMPERATUUR BANNER ── */
+.water-banner {
+  margin: 0 16px 20px;
+  background: linear-gradient(135deg, #0d2440, #0a1e35);
+  border: 1px solid rgba(0,229,200,0.2);
+  border-radius: 20px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 24px rgba(0,229,200,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.water-banner::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(0,229,200,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.water-left { display: flex; align-items: center; gap: 12px; }
+.water-icon { font-size: 30px; }
+.water-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); }
+.water-sub  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.water-advies { font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 5px; }
+.water-right { text-align: right; }
+.water-deg {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px;
+  color: var(--teal); line-height: 1;
+  text-shadow: 0 0 20px rgba(0,229,200,0.4);
+}
+.water-c { font-size: 16px; opacity: 0.7; }
+.water-live { font-size: 10px; color: var(--teal); margin-top: 4px; opacity: 0.8; }
+
+/* ── SECTIE ── */
+.section { margin-bottom: 22px; }
+
+.section-header {
+  padding: 0 20px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.spot-name {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 18px; color: var(--text);
+}
+
+.spot-sub {
+  font-size: 11px; color: var(--teal); font-weight: 600;
+  margin-top: 1px; letter-spacing: 0.5px;
+}
+
+.spot-name-row { display: flex; align-items: center; gap: 10px; }
+.section-icon { font-size: 24px; }
+.scroll-hint { font-size: 11px; color: var(--muted); }
+
+/* ── SCROLLBARE KAARTEN ── */
+.cards-scroll {
+  display: flex; gap: 10px;
+  padding: 8px 16px 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.cards-scroll::-webkit-scrollbar { display: none; }
+
+/* ── KAART ── */
+.day-card, .fiets-card {
+  flex: 0 0 calc((100vw - 32px - 20px) / 3);
+  max-width: 136px; min-width: 106px;
+  background: var(--bg2);
+  border-radius: 18px;
+  border: 1px solid var(--bg3);
+  scroll-snap-align: start;
+  padding: 14px 10px 12px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  position: relative;
+}
+
+.day-card:active, .fiets-card:active { transform: scale(0.95); }
+
+.day-card.today {
+  border-color: rgba(0,229,200,0.4);
+  box-shadow: 0 0 20px rgba(0,229,200,0.1);
+  background: linear-gradient(160deg, #0d2235, #0d1a2e);
+}
+
+.fiets-card.today {
+  border-color: rgba(255,112,67,0.4);
+  box-shadow: 0 0 20px rgba(255,112,67,0.1);
+}
+
+.day-card.today::before, .fiets-card.today::before {
+  content: 'Vandaag';
+  position: absolute; top: -10px;
+  background: var(--teal); color: #080f1e;
+  font-size: 9px; font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  padding: 2px 8px; border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.fiets-card.today::before { background: var(--orange); }
+
+.day-card.good { border-color: rgba(0,229,200,0.25); }
+
+.day-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); line-height: 1; }
+.day-date  { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: -2px; }
+
+.wind-speed, .fiets-speed {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 36px; line-height: 1;
+  text-shadow: 0 0 14px currentColor;
+}
+
+.wind-unit, .fiets-unit { font-size: 10px; color: var(--muted); margin-top: -4px; }
+
+.wind-arrow-wrap {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+}
+.wind-arrow { font-size: 15px; display: inline-block; }
+.wind-dir   { font-size: 11px; font-weight: 600; color: var(--muted); margin-top: -2px; }
+
+.wind-label-badge {
+  font-size: 9px; font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  padding: 3px 8px; border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.badge-light    { background: rgba(0,229,200,0.12);  color: #00e5c8; border: 1px solid rgba(0,229,200,0.3); }
+.badge-moderate { background: rgba(255,209,102,0.12); color: #ffd166; border: 1px solid rgba(255,209,102,0.3); }
+.badge-strong   { background: rgba(255,112,67,0.12);  color: #ff7043; border: 1px solid rgba(255,112,67,0.3); }
+.badge-storm    { background: rgba(255,59,92,0.12);   color: #ff3b5c; border: 1px solid rgba(255,59,92,0.3); }
+.badge-calm     { background: rgba(0,229,200,0.12);  color: #00e5c8; border: 1px solid rgba(0,229,200,0.3); }
+
+.speed-calm, .speed-light { color: var(--good); }
+.speed-moderate           { color: var(--moderate); }
+.speed-strong             { color: var(--strong); }
+.speed-storm              { color: var(--storm); }
+
+.tap-hint { font-size: 9px; color: var(--muted); opacity: 0.45; margin-top: -2px; }
+
+.bike-icon-wrap {
+  width: 46px; height: 46px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; font-size: 24px;
+}
+.bike-prima { background: rgba(0,229,200,0.1);  border: 1px solid rgba(0,229,200,0.3); }
+.bike-matig { background: rgba(255,209,102,0.1); border: 1px solid rgba(255,209,102,0.3); }
+.bike-zwaar { background: rgba(255,112,67,0.1);  border: 1px solid rgba(255,112,67,0.3); }
+.bike-storm { background: rgba(255,59,92,0.1);   border: 1px solid rgba(255,59,92,0.3); }
+
+/* ── DOTS ── */
+.scroll-dots { display: flex; justify-content: center; gap: 5px; margin-top: 6px; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--bg3); transition: all 0.3s; }
+.dot.active { background: var(--teal); width: 14px; border-radius: 2px; }
+
+/* ── DIVIDER / LEGENDA ── */
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--bg3), transparent); margin: 0 16px 20px; }
+.legend  { display: flex; gap: 12px; padding: 0 20px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--muted); font-weight: 500; }
+.legend-dot  { width: 7px; height: 7px; border-radius: 50%; }
+
+/* ── SPOTS SELECTOR ── */
+.spots-scroll {
+  display: flex; gap: 8px;
+  padding: 0 16px 16px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.spots-scroll::-webkit-scrollbar { display: none; }
+
+.spot-chip {
+  flex-shrink: 0;
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.spot-chip.active {
+  background: rgba(0,229,200,0.12);
+  border-color: rgba(0,229,200,0.4);
+  color: var(--teal);
+}
+
+/* ── COMPASS SECTIE ── */
+.compass-section {
+  margin: 0 16px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.compass-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 14px; color: var(--text);
+  margin-bottom: 14px; letter-spacing: 0.3px;
+}
+
+.compass-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+.compass-dir {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer;
+}
+
+.compass-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg3);
+  border: 2px solid transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  transition: all 0.2s;
+  font-family: 'Syne', sans-serif;
+}
+
+.compass-dir.liked .compass-circle {
+  background: rgba(0,229,200,0.15);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.compass-dir.disliked .compass-circle {
+  background: rgba(255,59,92,0.1);
+  border-color: rgba(255,59,92,0.3);
+  color: var(--storm);
+}
+
+.compass-label { font-size: 9px; color: var(--muted); }
+
+/* ── MARKTPLAATS SECTIE ── */
+.markt-section {
+  margin: 0 16px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.markt-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 14px; color: var(--text); margin-bottom: 12px;
+}
+
+.markt-input-row {
+  display: flex; gap: 8px; margin-bottom: 10px;
+}
+
+.markt-input {
+  flex: 1; background: var(--bg3); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 9px 12px;
+  font-size: 13px; color: var(--text); font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.markt-input::placeholder { color: var(--muted); }
+.markt-input:focus { border-color: rgba(0,229,200,0.3); }
+
+.markt-btn {
+  background: var(--teal); color: #080f1e;
+  border: none; border-radius: 10px; padding: 9px 14px;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.markt-categories {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+}
+
+.cat-chip {
+  background: var(--bg3); border: 1px solid transparent;
+  border-radius: 16px; padding: 5px 10px;
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.cat-chip.active {
+  background: rgba(0,229,200,0.12);
+  border-color: rgba(0,229,200,0.4);
+  color: var(--teal);
+}
+
+.markt-links { display: flex; flex-direction: column; gap: 8px; }
+
+.markt-link-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg3); border-radius: 12px; padding: 11px 14px;
+  text-decoration: none; cursor: pointer;
+  transition: background 0.2s;
+}
+.markt-link-item:active { background: rgba(0,229,200,0.08); }
+
+.markt-link-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.markt-link-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.markt-arrow      { font-size: 14px; color: var(--muted); }
+
+/* ── YOUTUBE SECTIE ── */
+.yt-section { margin: 0 16px 20px; }
+
+.yt-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 14px; color: var(--text);
+  margin-bottom: 12px; padding: 0 4px;
+}
+
+.yt-scroll {
+  display: flex; gap: 10px;
+  overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.yt-scroll::-webkit-scrollbar { display: none; }
+
+.yt-card {
+  flex-shrink: 0; width: 200px;
+  background: var(--bg2); border: 1px solid var(--bg3);
+  border-radius: 14px; overflow: hidden;
+  cursor: pointer; text-decoration: none;
+  transition: transform 0.2s;
+}
+.yt-card:active { transform: scale(0.97); }
+
+.yt-thumb {
+  width: 100%; height: 112px;
+  object-fit: cover; display: block;
+  background: var(--bg3);
+}
+
+.yt-thumb-placeholder {
+  width: 100%; height: 112px;
+  background: linear-gradient(135deg, #0d2235, #1a2d45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+}
+
+.yt-info { padding: 10px 10px 12px; }
+.yt-channel { font-size: 10px; color: var(--teal); font-weight: 600; margin-bottom: 3px; }
+.yt-vtitle  { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── INSTELLINGEN PAGINA ── */
+.settings-section {
+  margin: 0 16px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.settings-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 13px; color: var(--muted);
+  padding: 16px 16px 8px;
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border-top: 1px solid var(--bg3);
+}
+.setting-row:first-of-type { border-top: none; }
+
+.setting-label { font-size: 14px; color: var(--text); font-weight: 500; }
+.setting-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.toggle-switch {
+  width: 44px; height: 24px; border-radius: 12px;
+  background: var(--bg3); position: relative; cursor: pointer;
+  transition: background 0.2s; flex-shrink: 0;
+}
+.toggle-switch.on { background: rgba(0,229,200,0.3); border: 1px solid var(--teal); }
+.toggle-knob {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--muted); position: absolute; top: 3px; left: 3px;
+  transition: all 0.2s;
+}
+.toggle-switch.on .toggle-knob { left: 23px; background: var(--teal); }
+
+.setting-input {
+  background: var(--bg3); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 6px 10px;
+  font-size: 13px; color: var(--text); font-family: 'Inter', sans-serif;
+  width: 120px; outline: none; text-align: right;
+}
+.setting-input:focus { border-color: rgba(0,229,200,0.3); }
+
+/* ── BOTTOM SHEET ── */
+.sheet-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0);
+  z-index: 300; pointer-events: none; transition: background 0.3s;
+}
+.sheet-overlay.active { background: rgba(0,0,0,0.75); pointer-events: all; }
+
+.bottom-sheet {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #0d1a2e;
+  border-radius: 24px 24px 0 0;
+  border-top: 1px solid var(--bg3);
+  z-index: 301;
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.34, 1.1, 0.64, 1);
+  max-height: 88vh; overflow-y: auto;
+  padding-bottom: 40px;
+}
+.bottom-sheet.open { transform: translateY(0); }
+
+.sheet-handle { width: 36px; height: 3px; background: var(--bg3); border-radius: 2px; margin: 12px auto 0; }
+
+.sheet-header {
+  padding: 16px 20px 0;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.sheet-title    { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); }
+.sheet-subtitle { font-size: 12px; color: var(--teal); margin-top: 3px; font-weight: 600; }
+
+.sheet-close {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--bg3); border: none; font-size: 14px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); flex-shrink: 0;
+}
+
+.sheet-summary {
+  display: flex; gap: 8px; padding: 14px 16px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.sheet-summary::-webkit-scrollbar { display: none; }
+
+.summary-pill {
+  flex-shrink: 0; background: var(--bg);
+  border: 1px solid var(--bg3); border-radius: 14px;
+  padding: 10px 13px; text-align: center; min-width: 76px;
+}
+.pill-icon  { font-size: 18px; }
+.pill-val   { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.2; margin-top: 3px; }
+.pill-label { font-size: 9px; color: var(--muted); font-weight: 500; margin-top: 2px; letter-spacing: 0.3px; }
+
+.sun-row { display: flex; gap: 10px; padding: 0 16px; margin-bottom: 8px; }
+.sun-pill {
+  flex: 1; background: linear-gradient(135deg, rgba(255,209,102,0.1), rgba(255,112,67,0.06));
+  border: 1px solid rgba(255,209,102,0.2); border-radius: 14px;
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+}
+.sun-pill.sunset {
+  background: linear-gradient(135deg, rgba(255,112,67,0.12), rgba(255,59,92,0.06));
+  border-color: rgba(255,112,67,0.22);
+}
+.sun-pill-icon { font-size: 22px; }
+.sun-lbl  { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.sun-time { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: #ffd166; line-height: 1; margin-top: 1px; }
+.sun-pill.sunset .sun-time { color: #ff9a7b; }
+
+.sheet-section-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 12px; color: var(--muted); padding: 0 20px 10px;
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+
+.hourly-chart { padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+.hourly-chart::-webkit-scrollbar { display: none; }
+.chart-inner { display: flex; align-items: flex-end; gap: 5px; min-width: max-content; padding-bottom: 4px; }
+.bar-col     { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 34px; }
+.bar-val     { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; }
+.bar         { width: 26px; border-radius: 5px 5px 0 0; min-height: 4px; opacity: 0.9; }
+.bar-dir     { font-size: 9px; font-weight: 600; color: var(--muted); }
+.bar-time    { font-size: 9px; color: var(--muted); }
+
+.rain-row     { display: flex; align-items: center; gap: 8px; padding: 5px 16px; }
+.rain-time    { font-size: 11px; color: var(--muted); width: 38px; flex-shrink: 0; font-weight: 600; }
+.rain-bar-wrap{ flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.rain-bar     { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #00bcd4, #00e5c8); }
+.rain-val     { font-size: 11px; font-weight: 600; color: var(--teal); width: 38px; text-align: right; flex-shrink: 0; }
+
+.sheet-divider { height: 1px; background: var(--bg3); margin: 14px 16px; }
+
+/* ── PAGE HEADERS ── */
+.page-header {
+  padding: 40px 20px 16px;
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 26px; color: var(--text);
+}
+.page-header span { color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- ══════════ PAGINA: WEER ══════════ -->
+<div class="page active" id="page-weer">
+
+  <div class="app-header">
+    <div class="app-title">🏄 Wind<span class="t">s</span><span class="o">u</span>rf</div>
+    <div class="live-badge">LIVE</div>
+  </div>
+
+  <!-- WATERTEMPERATUUR — altijd zichtbaar, togglebaar -->
+  <div class="water-banner" id="water-banner-wrap">
+    <div class="water-left">
+      <div class="water-icon">🌊</div>
+      <div>
+        <div class="water-name">Oranjeplaat</div>
+        <div class="water-sub">Veerse Meer · Rijkswaterstaat</div>
+        <div class="water-advies" id="water-advies">laden...</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+      <button onclick="toggleWaterBanner()" id="water-toggle-btn"
+        style="background:rgba(255,255,255,0.1);border:none;border-radius:20px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,0.8);cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:0.3px">
+        👁 Verberg
+      </button>
+      <div id="water-detail">
+        <div class="water-deg" id="water-temp-val">–<span class="water-c">°C</span></div>
+        <div class="water-live" id="water-status">● ophalen...</div>
+      </div>
+    </div>
+  </div>
+  <!-- Ingeklapte mini-balk -->
+  <div id="water-mini" onclick="toggleWaterBanner()"
+    style="display:none;margin:0 16px 20px;background:linear-gradient(135deg,#0d2440,#0a1e35);border:1px solid rgba(0,229,200,0.2);border-radius:14px;padding:10px 14px;align-items:center;justify-content:space-between;cursor:pointer">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:18px">🌊</span>
+      <span style="font-size:12px;color:var(--muted)">Watertemp. Oranjeplaat</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--teal)" id="water-mini-val">–°C</span>
+      <span style="font-size:10px;color:var(--teal);background:rgba(0,229,200,0.1);border:1px solid rgba(0,229,200,0.25);padding:3px 8px;border-radius:20px">TOON</span>
+    </div>
+  </div>
+
+  <!-- SPOTS CHIPS -->
+  <div class="spots-scroll">
+    <div class="spot-chip active" onclick="selectSpot(this,'Oranjeplaat','Veerse Meer')">Oranjeplaat</div>
+    <div class="spot-chip" onclick="selectSpot(this,'Zandvoort','Noordzee')">Zandvoort</div>
+    <div class="spot-chip" onclick="selectSpot(this,'Workum','IJsselmeer')">Workum</div>
+    <div class="spot-chip" onclick="selectSpot(this,'Brouwersdam','Grevelingenmeer')">Brouwersdam</div>
+    <div class="spot-chip" onclick="selectSpot(this,'Hoek v Holland','Noordzee')">Hoek v Holland</div>
+    <div class="spot-chip" onclick="selectSpot(this,'Ouddorp','Grevelingenmeer')">Ouddorp</div>
+  </div>
+
+  <!-- WIND KAARTEN -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="spot-name" id="wind-spot-name">Oranjeplaat</div>
+        <div class="spot-sub" id="wind-spot-sub">VEERSE MEER</div>
+      </div>
+      <div class="scroll-hint">veeg →</div>
+    </div>
+
+    <div class="cards-scroll" id="scroll1">
+      <div class="day-card today" onclick="openSheet('wind',0)">
+        <div class="day-label">Zo</div><div class="day-date">1 mrt</div>
+        <div class="wind-speed speed-storm">42</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(180deg)">↑</span></div>
+        <div class="wind-dir">Z</div><div class="wind-label-badge badge-storm">STORM</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card" onclick="openSheet('wind',1)">
+        <div class="day-label">Ma</div><div class="day-date">2 mrt</div>
+        <div class="wind-speed speed-strong">30</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(157deg)">↑</span></div>
+        <div class="wind-dir">ZZO</div><div class="wind-label-badge badge-strong">STERK</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card" onclick="openSheet('wind',2)">
+        <div class="day-label">Di</div><div class="day-date">3 mrt</div>
+        <div class="wind-speed speed-moderate">15</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(180deg)">↑</span></div>
+        <div class="wind-dir">Z</div><div class="wind-label-badge badge-moderate">MATIG</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card good" onclick="openSheet('wind',3)">
+        <div class="day-label">Wo</div><div class="day-date">4 mrt</div>
+        <div class="wind-speed speed-light">22</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(90deg)">↑</span></div>
+        <div class="wind-dir">O</div><div class="wind-label-badge badge-light">✓ GOED</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card good" onclick="openSheet('wind',4)">
+        <div class="day-label">Do</div><div class="day-date">5 mrt</div>
+        <div class="wind-speed speed-light">21</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(135deg)">↑</span></div>
+        <div class="wind-dir">ZO</div><div class="wind-label-badge badge-light">✓ GOED</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card" onclick="openSheet('wind',5)">
+        <div class="day-label">Vr</div><div class="day-date">6 mrt</div>
+        <div class="wind-speed speed-moderate">13</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(247deg)">↑</span></div>
+        <div class="wind-dir">WZW</div><div class="wind-label-badge badge-moderate">MATIG</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="day-card good" onclick="openSheet('wind',6)">
+        <div class="day-label">Za</div><div class="day-date">7 mrt</div>
+        <div class="wind-speed speed-light">23</div><div class="wind-unit">knopen</div>
+        <div class="wind-arrow-wrap"><span class="wind-arrow" style="transform:rotate(337deg)">↑</span></div>
+        <div class="wind-dir">NNO</div><div class="wind-label-badge badge-light">✓ GOED</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+    </div>
+    <div class="scroll-dots" id="dots1">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="legend" style="margin-bottom:16px">
+    <div class="legend-item"><div class="legend-dot" style="background:#00e5c8"></div>Goed 15–25 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ffd166"></div>Matig 10–15 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff7043"></div>Sterk 25–35 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff3b5c"></div>Storm 35+ kn</div>
+  </div>
+  <div style="height:14px"></div>
+  <div class="divider"></div>
+
+  <!-- FIETS KAARTEN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="spot-name-row">
+        <span class="section-icon">🚴</span>
+        <div>
+          <div class="spot-name">Fietswind Middelburg</div>
+          <div class="spot-sub">PIEKWIND OVERDAG</div>
+        </div>
+      </div>
+      <div class="scroll-hint">veeg →</div>
+    </div>
+
+    <div class="cards-scroll" id="scroll2">
+      <div class="fiets-card today" onclick="openSheet('fiets',0)">
+        <div class="day-label">Zo</div><div class="day-date">1 mrt</div>
+        <div class="bike-icon-wrap bike-storm">🚴</div>
+        <div class="fiets-speed speed-storm">48</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-storm">GEVAARLIJK</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',1)">
+        <div class="day-label">Ma</div><div class="day-date">2 mrt</div>
+        <div class="bike-icon-wrap bike-zwaar">🚴</div>
+        <div class="fiets-speed speed-strong">35</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-strong">ZWAAR</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',2)">
+        <div class="day-label">Di</div><div class="day-date">3 mrt</div>
+        <div class="bike-icon-wrap bike-matig">🚴</div>
+        <div class="fiets-speed speed-moderate">24</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-moderate">MATIG</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',3)">
+        <div class="day-label">Wo</div><div class="day-date">4 mrt</div>
+        <div class="bike-icon-wrap bike-matig">🚴</div>
+        <div class="fiets-speed speed-moderate">26</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-moderate">MATIG</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',4)">
+        <div class="day-label">Do</div><div class="day-date">5 mrt</div>
+        <div class="bike-icon-wrap bike-matig">🚴</div>
+        <div class="fiets-speed speed-moderate">25</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-moderate">MATIG</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',5)">
+        <div class="day-label">Vr</div><div class="day-date">6 mrt</div>
+        <div class="bike-icon-wrap bike-prima">🚴</div>
+        <div class="fiets-speed speed-light">22</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-light">PRIMA</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+      <div class="fiets-card" onclick="openSheet('fiets',6)">
+        <div class="day-label">Za</div><div class="day-date">7 mrt</div>
+        <div class="bike-icon-wrap bike-zwaar">🚴</div>
+        <div class="fiets-speed speed-strong">33</div><div class="fiets-unit">knopen</div>
+        <div class="wind-label-badge badge-strong">ZWAAR</div>
+        <div class="tap-hint">tik voor details</div>
+      </div>
+    </div>
+    <div class="scroll-dots" id="dots2">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="legend" style="margin-bottom:20px">
+    <div class="legend-item"><div class="legend-dot" style="background:#00e5c8"></div>Prima &lt;25 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ffd166"></div>Matig 25–30 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff7043"></div>Zwaar 30–40 kn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff3b5c"></div>Gevaarlijk 40+ kn</div>
+  </div>
+
+</div><!-- /page-weer -->
+
+
+<!-- ══════════ PAGINA: SPOTS ══════════ -->
+<div class="page" id="page-spots">
+  <div class="page-header">📍 Mijn <span>Spots</span></div>
+
+  <!-- WINDRICHTING VOORKEUR KOMPAS -->
+  <div class="compass-section">
+    <div class="compass-title">🧭 Windrichting voorkeur</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:12px">Tik 1x = goed · 2x = slecht · 3x = neutraal</div>
+    <div class="compass-grid" id="compassGrid"></div>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted)">
+      <span style="color:var(--teal)">●</span> Goed &nbsp;&nbsp;
+      <span style="color:var(--storm)">●</span> Slecht &nbsp;&nbsp;
+      <span style="color:var(--muted)">●</span> Neutraal
+    </div>
+  </div>
+
+  <!-- SPOTS FILTER -->
+  <div style="padding:0 16px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none">
+    <div class="spot-chip active" id="filter-alle"  onclick="filterSpots('alle',  this)">Alle spots</div>
+    <div class="spot-chip"        id="filter-noordzee"  onclick="filterSpots('Noordzee',  this)">Noordzee</div>
+    <div class="spot-chip"        id="filter-ijsselmeer" onclick="filterSpots('IJsselmeer', this)">IJsselmeer</div>
+    <div class="spot-chip"        id="filter-veerse"    onclick="filterSpots('Veerse Meer', this)">Veerse Meer</div>
+    <div class="spot-chip"        id="filter-grevel"    onclick="filterSpots('Grevelingenmeer', this)">Grevelingen</div>
+  </div>
+
+  <!-- SPOTS KAARTEN -->
+  <div id="spots-list"></div>
+
+  <!-- EIGEN SPOT TOEVOEGEN -->
+  <div style="margin:0 16px 20px;background:var(--bg2);border:1px dashed var(--bg3);border-radius:16px;padding:16px;text-align:center;cursor:pointer" onclick="addSpotPrompt()">
+    <div style="font-size:22px;margin-bottom:6px">＋</div>
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--teal)">Eigen spot toevoegen</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:3px">Sla je favoriete locatie op</div>
+  </div>
+
+  <!-- ZONSOPKOMST / GOUDEN UUR -->
+  <div style="margin:0 16px 20px;background:var(--bg2);border:1px solid var(--bg3);border-radius:16px;padding:16px">
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:12px">☀️ Zon & gouden uur — Zeeland</div>
+    <div style="display:flex;gap:10px">
+      <div style="flex:1;background:linear-gradient(135deg,rgba(255,209,102,0.1),rgba(255,112,67,0.06));border:1px solid rgba(255,209,102,0.2);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:20px">🌅</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#ffd166;margin-top:4px">07:42</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px">Opkomst</div>
+      </div>
+      <div style="flex:1;background:linear-gradient(135deg,rgba(255,112,67,0.1),rgba(255,59,92,0.06));border:1px solid rgba(255,112,67,0.2);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:20px">🌇</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#ff9a7b;margin-top:4px">18:21</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px">Ondergang</div>
+      </div>
+      <div style="flex:1;background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:20px">✨</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--teal);margin-top:4px">10u 39m</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px">Daglicht</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════ PAGINA: MARKTPLAATS ══════════ -->
+<div class="page" id="page-markt">
+  <div class="page-header">🛒 Markt<span>plaats</span></div>
+
+  <div class="markt-section">
+    <div class="markt-title">🔍 Zoek surfmateriaal</div>
+    <div class="markt-input-row">
+      <input class="markt-input" id="markt-zoek" placeholder="bijv. Neil Pryde 7.0" type="text">
+      <input class="markt-input" id="markt-locatie" placeholder="Zeeland" type="text" style="max-width:100px">
+    </div>
+    <div class="markt-categories" id="markt-cats">
+      <div class="cat-chip active" onclick="selectCat(this,'windsurfzeil windsurf')">Zeilen</div>
+      <div class="cat-chip" onclick="selectCat(this,'windsurfplank')">Planken</div>
+      <div class="cat-chip" onclick="selectCat(this,'windsurfmast boom')">Masten/Bomen</div>
+      <div class="cat-chip" onclick="selectCat(this,'wetsuit neopreen')">Wetsuits</div>
+      <div class="cat-chip" onclick="selectCat(this,'windsurf compleet set')">Complete sets</div>
+    </div>
+    <button class="markt-btn" style="width:100%;margin-bottom:14px" onclick="openMarktplaats()">Zoek op Marktplaats →</button>
+
+    <div class="markt-links">
+      <a class="markt-link-item" onclick="openUrl('https://www.marktplaats.nl/l/watersport-en-boten/windsurfen/')">
+        <div><div class="markt-link-title">Alle windsurfadvertenties</div><div class="markt-link-sub">Marktplaats · Watersport</div></div>
+        <div class="markt-arrow">→</div>
+      </a>
+      <a class="markt-link-item" onclick="openUrl('https://www.marktplaats.nl/l/watersport-en-boten/windsurfen/p/1/?query=windsurf+zeil')">
+        <div><div class="markt-link-title">Windsurfzeilen</div><div class="markt-link-sub">Alle merken en maten</div></div>
+        <div class="markt-arrow">→</div>
+      </a>
+      <a class="markt-link-item" onclick="openUrl('https://www.marktplaats.nl/l/watersport-en-boten/windsurfen/p/1/?query=windsurfplank')">
+        <div><div class="markt-link-title">Windsurfplanken</div><div class="markt-link-sub">Freeride, slalom, wave</div></div>
+        <div class="markt-arrow">→</div>
+      </a>
+      <a class="markt-link-item" onclick="openUrl('https://www.marktplaats.nl/l/watersport-en-boten/windsurfen/p/1/?query=wetsuit')">
+        <div><div class="markt-link-title">Wetsuits & neopreen</div><div class="markt-link-sub">Zomer en winter</div></div>
+        <div class="markt-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- YOUTUBE -->
+  <div class="yt-section">
+    <div class="yt-title">📺 Windsurf videos</div>
+    <div class="yt-scroll" id="yt-scroll">
+      <a class="yt-card" onclick="openUrl('https://www.youtube.com/results?search_query=windsurf&sp=CAI%253D')" href="javascript:void(0)">
+        <div class="yt-thumb-placeholder">🏄</div>
+        <div class="yt-info">
+          <div class="yt-channel">YouTube · Nieuwste</div>
+          <div class="yt-vtitle">Alle nieuwste windsurf videos</div>
+        </div>
+      </a>
+      <a class="yt-card" onclick="openUrl('https://www.youtube.com/results?search_query=windsurf+veerse+meer')" href="javascript:void(0)">
+        <div class="yt-thumb-placeholder">🌊</div>
+        <div class="yt-info">
+          <div class="yt-channel">YouTube</div>
+          <div class="yt-vtitle">Windsurf Veerse Meer</div>
+        </div>
+      </a>
+      <a class="yt-card" onclick="openUrl('https://www.youtube.com/results?search_query=windsurf+nederland+2025')" href="javascript:void(0)">
+        <div class="yt-thumb-placeholder">💨</div>
+        <div class="yt-info">
+          <div class="yt-channel">YouTube</div>
+          <div class="yt-vtitle">Windsurf Nederland 2025</div>
+        </div>
+      </a>
+      <a class="yt-card" onclick="openUrl('https://www.youtube.com/results?search_query=windsurf+tips+beginners')" href="javascript:void(0)">
+        <div class="yt-thumb-placeholder">🎓</div>
+        <div class="yt-info">
+          <div class="yt-channel">YouTube</div>
+          <div class="yt-vtitle">Windsurf tips voor beginners</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ PAGINA: INSTELLINGEN ══════════ -->
+<div class="page" id="page-instellingen">
+  <div class="page-header">⚙️ Instellingen</div>
+
+  <div class="settings-section">
+    <div class="settings-title">Locatie</div>
+    <div class="setting-row">
+      <div><div class="setting-label">Thuislocatie</div><div class="setting-sub">Standaard spot</div></div>
+      <input class="setting-input" id="set-locatie" value="Oranjeplaat" placeholder="Spot naam">
+    </div>
+    <div class="setting-row">
+      <div><div class="setting-label">Marktplaats locatie</div><div class="setting-sub">Zoekradius</div></div>
+      <input class="setting-input" id="set-markt-loc" value="Zeeland" placeholder="Stad/regio">
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-title">Windsterkte drempels</div>
+    <div class="setting-row">
+      <div><div class="setting-label">Minimaal voor sessie</div><div class="setting-sub">In knopen</div></div>
+      <input class="setting-input" id="set-min-wind" value="15" type="number" min="5" max="50">
+    </div>
+    <div class="setting-row">
+      <div><div class="setting-label">Maximum (te zwaar)</div><div class="setting-sub">In knopen</div></div>
+      <input class="setting-input" id="set-max-wind" value="35" type="number" min="10" max="70">
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-title">Weergave</div>
+    <div class="setting-row">
+      <div><div class="setting-label">Eenheid wind</div><div class="setting-sub">Knopen of km/h</div></div>
+      <div class="toggle-switch on" id="toggle-eenheid" onclick="toggleSwitch(this)">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+    <div class="setting-row">
+      <div><div class="setting-label">Fietswind tonen</div><div class="setting-sub">Op het weerscherm</div></div>
+      <div class="toggle-switch on" id="toggle-fiets" onclick="toggleSwitch(this)">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+    <div class="setting-row">
+      <div><div class="setting-label">Watertemperatuur</div><div class="setting-sub">Banner tonen</div></div>
+      <div class="toggle-switch on" id="toggle-water" onclick="toggleSwitch(this)">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-title">Over de app</div>
+    <div class="setting-row">
+      <div><div class="setting-label">Windsurf App</div><div class="setting-sub">Versie 2.0 · Ocean Dark</div></div>
+      <div style="font-size:18px">🏄</div>
+    </div>
+    <div class="setting-row">
+      <div><div class="setting-label">Data bronnen</div><div class="setting-sub">Open-Meteo · Rijkswaterstaat</div></div>
+      <div style="font-size:11px;color:var(--teal)">GRATIS</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════ NAV BAR ══════════ -->
+<div class="nav-bar">
+  <button class="nav-tab active" id="tab-weer" onclick="showPage('weer')">
+    <div class="nav-tab-icon">🌬️</div>
+    <div class="nav-tab-label">WEER</div>
+  </button>
+  <button class="nav-tab" id="tab-spots" onclick="showPage('spots')">
+    <div class="nav-tab-icon">📍</div>
+    <div class="nav-tab-label">SPOTS</div>
+  </button>
+  <button class="nav-tab" id="tab-markt" onclick="showPage('markt')">
+    <div class="nav-tab-icon">🛒</div>
+    <div class="nav-tab-label">MARKT</div>
+  </button>
+  <button class="nav-tab" id="tab-instellingen" onclick="showPage('instellingen')">
+    <div class="nav-tab-icon">⚙️</div>
+    <div class="nav-tab-label">INSTELL.</div>
+  </button>
+</div>
+
+
+<!-- ══════════ BOTTOM SHEET ══════════ -->
+<div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-title" id="sheet-title"></div>
+      <div class="sheet-subtitle" id="sheet-subtitle"></div>
+    </div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-summary" id="sheet-summary"></div>
+  <div class="sheet-divider"></div>
+  <div class="sun-row" id="sheet-sun"></div>
+  <div class="sheet-divider"></div>
+  <div class="sheet-section-title">Wind per uur (knopen)</div>
+  <div class="hourly-chart"><div class="chart-inner" id="wind-chart"></div></div>
+  <div class="sheet-divider"></div>
+  <div class="sheet-section-title">Neerslag per uur</div>
+  <div id="rain-rows"></div>
+</div>
+
+
+<script>
+// ══════════ DATA ══════════
+const DAYS = [
+  { label:'Zo', date:'1 mrt', fullDate:'Zondag 1 maart', wind:42, dir:'Z', badge:'Storm', sunrise:'07:42', sunset:'18:21',
+    hourlyWind:[38,40,42,44,43,41,40,38,36,34,32,30,28,26,25,24,26,28,30,32,34,35,36,37],
+    hourlyDir: ['Z','Z','ZZW','ZZW','Z','Z','Z','ZW','ZW','ZW','ZW','Z','Z','Z','ZO','ZO','Z','Z','ZZW','ZZW','Z','Z','Z','Z'],
+    hourlyRain:[0,0,0,0.2,0.5,0.8,1.2,1.5,1.0,0.6,0.3,0.1,0,0,0,0,0.1,0.3,0.5,0.2,0,0,0,0] },
+  { label:'Ma', date:'2 mrt', fullDate:'Maandag 2 maart', wind:30, dir:'ZZO', badge:'Sterk', sunrise:'07:40', sunset:'18:23',
+    hourlyWind:[30,29,28,27,26,25,24,23,24,25,27,29,30,31,30,28,27,26,25,24,23,22,22,21],
+    hourlyDir: ['ZZO','ZZO','ZO','ZO','ZO','ZZO','ZZO','Z','Z','ZZO','ZZO','ZZO','ZZO','Z','Z','ZO','ZO','ZO','ZO','ZZO','ZZO','ZZO','Z','Z'],
+    hourlyRain:[0.2,0.1,0,0,0,0,0,0,0,0,0.1,0.2,0.3,0.1,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Di', date:'3 mrt', fullDate:'Dinsdag 3 maart', wind:15, dir:'Z', badge:'Matig', sunrise:'07:38', sunset:'18:25',
+    hourlyWind:[10,10,11,12,13,14,15,16,17,16,15,14,13,12,11,10,11,12,13,14,15,14,13,12],
+    hourlyDir: ['Z','Z','Z','ZZW','ZZW','Z','Z','Z','ZW','ZW','Z','Z','Z','ZZO','ZZO','Z','Z','Z','Z','ZZW','ZZW','Z','Z','Z'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Wo', date:'4 mrt', fullDate:'Woensdag 4 maart', wind:22, dir:'O', badge:'Goed', sunrise:'07:36', sunset:'18:27',
+    hourlyWind:[18,18,19,20,21,22,23,22,21,20,19,20,21,22,22,21,20,19,18,17,16,16,15,15],
+    hourlyDir: ['O','O','ONO','ONO','O','O','O','OZO','OZO','O','O','O','ONO','ONO','O','O','O','O','OZO','OZO','O','O','O','O'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Do', date:'5 mrt', fullDate:'Donderdag 5 maart', wind:21, dir:'ZO', badge:'Goed', sunrise:'07:33', sunset:'18:29',
+    hourlyWind:[16,17,18,19,20,21,22,21,20,19,18,19,20,21,21,20,19,18,17,16,15,15,14,14],
+    hourlyDir: ['ZO','ZO','ZZO','ZZO','ZO','ZO','ZO','OZO','OZO','ZO','ZO','ZO','ZZO','ZZO','ZO','ZO','ZO','ZO','OZO','OZO','ZO','ZO','ZO','ZO'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.1,0,0,0,0,0,0,0] },
+  { label:'Vr', date:'6 mrt', fullDate:'Vrijdag 6 maart', wind:13, dir:'WZW', badge:'Matig', sunrise:'07:31', sunset:'18:31',
+    hourlyWind:[10,10,11,11,12,13,14,14,13,12,11,10,10,11,12,13,13,12,11,10,10,9,9,8],
+    hourlyDir: ['WZW','W','W','WNW','WNW','WZW','WZW','W','W','WZW','WZW','W','W','W','WZW','WZW','WZW','W','W','WNW','WNW','W','W','WZW'],
+    hourlyRain:[0.5,0.3,0.2,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0.2,0.1,0,0,0,0,0] },
+  { label:'Za', date:'7 mrt', fullDate:'Zaterdag 7 maart', wind:23, dir:'NNO', badge:'Goed', sunrise:'07:29', sunset:'18:33',
+    hourlyWind:[18,19,20,21,22,23,24,24,23,22,21,20,20,21,22,23,23,22,21,20,19,18,18,17],
+    hourlyDir: ['NNO','N','N','NNW','NNW','NNO','NNO','N','N','NNO','NNO','N','N','N','NNO','NNO','NNO','N','N','NNW','NNW','N','N','NNO'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+];
+
+const FIETS_DAYS = [
+  { label:'Zo', date:'1 mrt', fullDate:'Zondag 1 maart', wind:48, dir:'Z', badge:'Gevaarlijk', sunrise:'07:42', sunset:'18:21',
+    hourlyWind:[40,42,44,46,48,48,47,46,45,44,43,42,41,40,38,36,35,34,33,32,31,30,30,29],
+    hourlyDir: ['Z','Z','ZZW','ZZW','Z','Z','Z','ZW','ZW','ZW','ZW','Z','Z','Z','ZO','ZO','Z','Z','ZZW','ZZW','Z','Z','Z','Z'],
+    hourlyRain:[0.1,0.2,0.4,0.6,0.8,1.0,0.8,0.6,0.4,0.2,0.1,0,0,0,0,0,0.1,0.2,0.3,0.2,0.1,0,0,0] },
+  { label:'Ma', date:'2 mrt', fullDate:'Maandag 2 maart', wind:35, dir:'ZZO', badge:'Zwaar', sunrise:'07:40', sunset:'18:23',
+    hourlyWind:[32,31,30,29,28,27,28,30,32,34,35,35,34,33,32,30,28,26,25,24,23,22,21,20],
+    hourlyDir: ['ZZO','ZZO','ZO','ZO','ZO','ZZO','ZZO','Z','Z','ZZO','ZZO','ZZO','ZZO','Z','Z','ZO','ZO','ZO','ZO','ZZO','ZZO','ZZO','Z','Z'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Di', date:'3 mrt', fullDate:'Dinsdag 3 maart', wind:24, dir:'Z', badge:'Matig', sunrise:'07:38', sunset:'18:25',
+    hourlyWind:[18,19,20,21,22,23,24,24,23,22,21,20,19,18,17,16,17,18,19,20,21,20,19,18],
+    hourlyDir: ['Z','Z','Z','ZZW','ZZW','Z','Z','Z','ZW','ZW','Z','Z','Z','ZZO','ZZO','Z','Z','Z','Z','ZZW','ZZW','Z','Z','Z'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Wo', date:'4 mrt', fullDate:'Woensdag 4 maart', wind:26, dir:'O', badge:'Matig', sunrise:'07:36', sunset:'18:27',
+    hourlyWind:[20,21,22,23,24,25,26,26,25,24,23,22,22,23,24,25,25,24,23,22,21,20,19,19],
+    hourlyDir: ['O','O','ONO','ONO','O','O','O','OZO','OZO','O','O','O','ONO','ONO','O','O','O','O','OZO','OZO','O','O','O','O'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Do', date:'5 mrt', fullDate:'Donderdag 5 maart', wind:25, dir:'ZO', badge:'Matig', sunrise:'07:33', sunset:'18:29',
+    hourlyWind:[19,20,21,22,23,24,25,25,24,23,22,21,21,22,23,24,24,23,22,21,20,19,18,18],
+    hourlyDir: ['ZO','ZO','ZZO','ZZO','ZO','ZO','ZO','OZO','OZO','ZO','ZO','ZO','ZZO','ZZO','ZO','ZO','ZO','ZO','OZO','OZO','ZO','ZO','ZO','ZO'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Vr', date:'6 mrt', fullDate:'Vrijdag 6 maart', wind:22, dir:'WZW', badge:'Prima', sunrise:'07:31', sunset:'18:31',
+    hourlyWind:[16,17,18,19,20,21,22,22,21,20,19,18,18,19,20,21,21,20,19,18,17,16,15,15],
+    hourlyDir: ['WZW','W','W','WNW','WNW','WZW','WZW','W','W','WZW','WZW','W','W','W','WZW','WZW','WZW','W','W','WNW','WNW','W','W','WZW'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'Za', date:'7 mrt', fullDate:'Zaterdag 7 maart', wind:33, dir:'NNO', badge:'Zwaar', sunrise:'07:29', sunset:'18:33',
+    hourlyWind:[26,27,28,29,30,31,32,33,33,32,31,30,29,30,31,32,32,31,30,29,28,27,26,25],
+    hourlyDir: ['NNO','N','N','NNW','NNW','NNO','NNO','N','N','NNO','NNO','N','N','N','NNO','NNO','NNO','N','N','NNW','NNW','N','N','NNO'],
+    hourlyRain:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+];
+
+const SPOTS = [
+  { naam:'Oranjeplaat',      regio:'Veerse Meer',      wind:22, dir:'O',   badge:'Goed',  lat:51.548, lon:3.896 },
+  { naam:'Zandvoort',        regio:'Noordzee',         wind:18, dir:'NW',  badge:'Goed',  lat:52.374, lon:4.531 },
+  { naam:'Workum',           regio:'IJsselmeer',       wind:14, dir:'ZW',  badge:'Matig', lat:52.980, lon:5.441 },
+  { naam:'Brouwersdam',      regio:'Grevelingenmeer',  wind:25, dir:'ZW',  badge:'Goed',  lat:51.743, lon:3.874 },
+  { naam:'Hoek van Holland', regio:'Noordzee',         wind:20, dir:'NNW', badge:'Goed',  lat:51.978, lon:4.133 },
+  { naam:'Ouddorp',          regio:'Grevelingenmeer',  wind:22, dir:'WZW', badge:'Goed',  lat:51.820, lon:3.935 },
+  { naam:'Oostvoorne',       regio:'Noordzee',         wind:19, dir:'NW',  badge:'Goed',  lat:51.910, lon:4.073 },
+  { naam:'Scheveningen',     regio:'Noordzee',         wind:21, dir:'NW',  badge:'Goed',  lat:52.104, lon:4.267 },
+  { naam:'Medemblik',        regio:'IJsselmeer',       wind:16, dir:'ZW',  badge:'Goed',  lat:52.770, lon:5.108 },
+  { naam:'Grevelingendam',   regio:'Grevelingenmeer',  wind:23, dir:'ZW',  badge:'Goed',  lat:51.743, lon:4.023 },
+  { naam:'Schotsman',        regio:'Veerse Meer',      wind:20, dir:'O',   badge:'Goed',  lat:51.538, lon:3.730 },
+  { naam:'Enkhuizen',        regio:'IJsselmeer',       wind:13, dir:'ZW',  badge:'Matig', lat:52.703, lon:5.294 },
+];
+
+let spotsFilter = 'alle';
+
+function filterSpots(regio, el) {
+  spotsFilter = regio;
+  document.querySelectorAll('#page-spots .spot-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  buildSpots();
+}
+
+function addSpotPrompt() {
+  const naam = prompt('Naam van de spot?');
+  if (naam) {
+    SPOTS.push({ naam, regio:'Eigen', wind:0, dir:'–', badge:'Onbekend', lat:0, lon:0 });
+    buildSpots();
+  }
+}
+
+// ══════════ NAVIGATIE ══════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ══════════ SPOT SELECTOR ══════════
+function selectSpot(el, naam, regio) {
+  document.querySelectorAll('.spot-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('wind-spot-name').textContent = naam;
+  document.getElementById('wind-spot-sub').textContent  = regio.toUpperCase();
+}
+
+// ══════════ COMPASS ══════════
+const dirs = ['N','NNO','NO','ONO','O','OZO','ZO','ZZO','Z','ZZW','ZW','WZW','W','WNW','NW','NNW'];
+const compassState = {};
+
+function buildCompass() {
+  const grid = document.getElementById('compassGrid');
+  dirs.forEach(d => {
+    compassState[d] = 'neutral';
+    grid.innerHTML += `
+      <div class="compass-dir" id="cmp-${d}" onclick="cycleCompass('${d}')">
+        <div class="compass-circle">${d}</div>
+        <div class="compass-label"></div>
+      </div>`;
+  });
+}
+
+function cycleCompass(dir) {
+  const states = ['neutral','liked','disliked'];
+  const cur = states.indexOf(compassState[dir]);
+  compassState[dir] = states[(cur+1) % 3];
+  document.getElementById('cmp-'+dir).className = 'compass-dir ' + compassState[dir];
+}
+
+buildCompass();
+
+// ══════════ SPOTS LIJST ══════════
+function buildSpots() {
+  const list = document.getElementById('spots-list');
+  const gefilterd = spotsFilter === 'alle' ? SPOTS : SPOTS.filter(s => s.regio === spotsFilter);
+  list.innerHTML = '';
+  gefilterd.forEach(s => {
+    const col   = s.badge==='Goed' ? '#00e5c8' : s.badge==='Matig' ? '#ffd166' : s.badge==='Sterk' ? '#ff7043' : '#5a7a9a';
+    const badge = s.badge==='Goed' ? 'badge-light' : s.badge==='Matig' ? 'badge-moderate' : s.badge==='Sterk' ? 'badge-strong' : '';
+    const regioBadge = {
+      'Veerse Meer':'🌊','Noordzee':'🌊','IJsselmeer':'🏞️','Grevelingenmeer':'🌊','Eigen':'📍'
+    }[s.regio] || '📍';
+    list.innerHTML += `
+      <div style="margin:0 16px 10px;background:var(--bg2);border:1px solid var(--bg3);border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:border-color 0.2s"
+        onclick="selectSpot(document.querySelectorAll('.spot-chip')[0],'${s.naam}','${s.regio}');showPage('weer')"
+        onmouseenter="this.style.borderColor='rgba(0,229,200,0.3)'" onmouseleave="this.style.borderColor='var(--bg3)'">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--text)">${s.naam}</div>
+          <div style="font-size:11px;color:var(--teal);margin-top:2px;font-weight:600">${regioBadge} ${s.regio.toUpperCase()}</div>
+          ${s.wind > 0 ? `<div style="margin-top:6px"><span class="wind-label-badge ${badge}" style="font-size:9px">${s.badge}</span></div>` : ''}
+        </div>
+        <div style="text-align:right">
+          ${s.wind > 0
+            ? `<div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:${col};text-shadow:0 0 12px ${col}55">${s.wind}<span style="font-size:12px;opacity:0.7"> kn</span></div>
+               <div style="font-size:11px;color:var(--muted);margin-top:1px">${s.dir}</div>`
+            : `<div style="font-size:22px">📍</div>`
+          }
+        </div>
+      </div>`;
+  });
+}
+buildSpots();
+
+// ══════════ MARKTPLAATS ══════════
+let activeCat = 'windsurfzeil windsurf';
+
+function selectCat(el, cat) {
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeCat = cat;
+}
+
+function openMarktplaats() {
+  const zoek  = document.getElementById('markt-zoek').value || activeCat;
+  const loc   = document.getElementById('markt-locatie').value || 'Zeeland';
+  const query = encodeURIComponent(zoek + ' ' + loc);
+  window.open(`https://www.marktplaats.nl/q/${query}/`, '_blank');
+}
+
+function openUrl(url) {
+  window.open(url, '_blank');
+}
+
+// ══════════ TOGGLE ══════════
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+}
+
+// ══════════ WIND KLEUR ══════════
+function windColor(kn) {
+  if (kn >= 35) return '#ff3b5c';
+  if (kn >= 25) return '#ff7043';
+  if (kn >= 15) return '#00e5c8';
+  return '#ffd166';
+}
+
+// ══════════ BOTTOM SHEET ══════════
+function openSheet(type, idx) {
+  const d = type==='wind' ? DAYS[idx] : FIETS_DAYS[idx];
+  const isWind = type==='wind';
+
+  document.getElementById('sheet-title').textContent    = d.fullDate;
+  document.getElementById('sheet-subtitle').textContent = isWind ? 'Oranjeplaat · Veerse Meer' : 'Fietswind · Middelburg';
+
+  const totalRain = d.hourlyRain.reduce((a,b)=>a+b,0).toFixed(1);
+  const maxWind   = Math.max(...d.hourlyWind);
+  const rainUren  = d.hourlyRain.filter(r=>r>0).length;
+
+  document.getElementById('sheet-summary').innerHTML = `
+    <div class="summary-pill"><div class="pill-icon">${isWind?'🏄':'🚴'}</div>
+      <div class="pill-val" style="color:${windColor(d.wind)}">${d.wind} kn</div>
+      <div class="pill-label">PIEK WIND</div></div>
+    <div class="summary-pill"><div class="pill-icon">🧭</div>
+      <div class="pill-val">${d.dir}</div>
+      <div class="pill-label">RICHTING</div></div>
+    <div class="summary-pill"><div class="pill-icon">🌧️</div>
+      <div class="pill-val" style="color:#00e5c8">${totalRain} mm</div>
+      <div class="pill-label">REGEN</div></div>
+    <div class="summary-pill"><div class="pill-icon">⏱️</div>
+      <div class="pill-val">${rainUren} uur</div>
+      <div class="pill-label">REGEN UREN</div></div>
+    <div class="summary-pill"><div class="pill-icon">💨</div>
+      <div class="pill-val" style="color:${windColor(maxWind)}">${maxWind} kn</div>
+      <div class="pill-label">MAX WIND</div></div>`;
+
+  document.getElementById('sheet-sun').innerHTML = `
+    <div class="sun-pill">
+      <div class="sun-pill-icon">🌅</div>
+      <div><div class="sun-lbl">Zonsopkomst</div><div class="sun-time">${d.sunrise}</div></div>
+    </div>
+    <div class="sun-pill sunset">
+      <div class="sun-pill-icon">🌇</div>
+      <div><div class="sun-lbl">Zonsondergang</div><div class="sun-time">${d.sunset}</div></div>
+    </div>`;
+
+  const maxBar = Math.max(...d.hourlyWind);
+  let chart = '';
+  for (let h=6; h<=22; h++) {
+    const kn=d.hourlyWind[h], dir=d.hourlyDir[h];
+    const px=Math.round((kn/(maxBar*1.1))*110);
+    const col=windColor(kn);
+    chart+=`<div class="bar-col">
+      <div class="bar-val" style="color:${col}">${kn}</div>
+      <div class="bar" style="height:${px}px;background:${col};box-shadow:0 0 8px ${col}55"></div>
+      <div class="bar-dir">${dir}</div>
+      <div class="bar-time">${String(h).padStart(2,'0')}:00</div>
+    </div>`;
+  }
+  document.getElementById('wind-chart').innerHTML = chart;
+
+  const maxRain=Math.max(...d.hourlyRain,0.5);
+  let rain='';
+  for (let h=6; h<=22; h++) {
+    const mm=d.hourlyRain[h];
+    const pct=mm>0?Math.max(Math.round((mm/maxRain)*100),6):0;
+    rain+=`<div class="rain-row">
+      <div class="rain-time">${String(h).padStart(2,'0')}:00</div>
+      <div class="rain-bar-wrap"><div class="rain-bar" style="width:${pct}%"></div></div>
+      <div class="rain-val">${mm>0?mm.toFixed(1)+' mm':'–'}</div>
+    </div>`;
+  }
+  document.getElementById('rain-rows').innerHTML = rain;
+
+  document.getElementById('overlay').classList.add('active');
+  document.getElementById('bottomSheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('overlay').classList.remove('active');
+  document.getElementById('bottomSheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ══════════ SCROLL DOTS ══════════
+function setupScrollDots(scrollId, dotsId) {
+  const scroll=document.getElementById(scrollId);
+  const dots=document.querySelectorAll(`#${dotsId} .dot`);
+  scroll.addEventListener('scroll', () => {
+    const max=scroll.scrollWidth-scroll.clientWidth;
+    if(!max) return;
+    const active=Math.round((scroll.scrollLeft/max)*(dots.length-1));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===active));
+  });
+}
+setupScrollDots('scroll1','dots1');
+setupScrollDots('scroll2','dots2');
+
+// ══════════ WATER BANNER TOGGLE ══════════
+let waterBannerOpen = true;
+function toggleWaterBanner() {
+  waterBannerOpen = !waterBannerOpen;
+  const banner = document.getElementById('water-banner-wrap');
+  const mini   = document.getElementById('water-mini');
+  const btn    = document.getElementById('water-toggle-btn');
+  if (waterBannerOpen) {
+    banner.style.display = '';
+    mini.style.display   = 'none';
+    btn.textContent      = '👁 Verberg';
+  } else {
+    banner.style.display = 'none';
+    mini.style.display   = 'flex';
+    btn.textContent      = '👁 Toon';
+  }
+}
+
+// ══════════ WATERTEMPERATUUR ══════════
+async function fetchWaterTemp() {
+  const url='https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenLaatsteWaarnemingen';
+  const now=new Date(), from=new Date(now-7200000);
+  const fmt=d=>d.toISOString().slice(0,19)+'.000+00:00';
+  const body={
+    AquoPlusWaarnemingMetadataLijst:[{
+      AquoMetadata:{ Compartiment:{Code:"OW"}, Grootheid:{Code:"T"} },
+      Locatie:{ Code:"ORANJPLT", X:3.89594, Y:51.54833 }
+    }],
+    Periode:{ Begindatumtijd:fmt(from), Einddatumtijd:fmt(now) }
+  };
+  try {
+    const resp=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const json=await resp.json();
+    const m=json?.WaarnemingenLijst?.[0]?.MetingenLijst;
+    if(m&&m.length>0){
+      const temp=parseFloat(m[m.length-1].Waarde).toFixed(1);
+      document.getElementById('water-temp-val').innerHTML=temp+'<span class="water-c">°C</span>';
+      document.getElementById('water-status').innerHTML='<span style="color:#00e5c8">● LIVE</span>';
+      const t=parseFloat(temp);
+      const adv=t<10?'🥶 Droogpak aanbevolen':t<15?'🧊 5mm wetsuit':t<18?'🌊 3mm wetsuit':t<22?'✅ Shorty volstaat':'☀️ Zwemshort';
+      document.getElementById('water-advies').textContent=adv;
+      document.getElementById('water-mini-val').textContent=temp+'°C';
+      return;
+    }
+  } catch(e){}
+  document.getElementById('water-temp-val').innerHTML='7<span class="water-c">°C</span>';
+  document.getElementById('water-status').textContent='schatting';
+  document.getElementById('water-advies').textContent='🥶 Droogpak aanbevolen';
+}
+fetchWaterTemp();
+</script>
+</body>
+</html>
