@@ -2,7 +2,7 @@
   "name": "WindSurf NL",
   "short_name": "WindSurf",
   "description": "Nederlandse windsurf wind alert app",
-  "start_url": "./windsurf-nl-v3.4-4.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a1628",
   "theme_color": "#0a1628",
