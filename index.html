@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f0f4f8" id="themeColor"><title>WindSurf NL v2.3</title><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f0f4f8" id="themeColor"><title>WindSurf NL v3.5</title><link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Outfit',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;background:#f0f4f8}@keyframes spin{to{transform:rotate(360deg)}}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.fade-in{animation:fadeIn 0.4s ease}</style>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -30,11 +30,15 @@ const wc=(kn,t)=>{if(kn>=15&&kn<=25)return{label:"Perfect",color:t.w.p,bg:t.wb.p
 const SP=[{id:1,name:"Scheveningen",lat:52.0988,lon:4.2621,reg:"Zuid-Holland",type:"Noordzee",rws:"SCHEVNGN"},{id:2,name:"Zandvoort",lat:52.3759,lon:4.5339,reg:"Noord-Holland",type:"Noordzee",rws:"IJMDBTHVN"},{id:3,name:"IJmuiden",lat:52.4614,lon:4.59,reg:"Noord-Holland",type:"Noordzee",rws:"IJMDBTHVN"},{id:4,name:"Wijk aan Zee",lat:52.4943,lon:4.5958,reg:"Noord-Holland",type:"Noordzee"},{id:5,name:"Makkum",lat:53.0548,lon:5.3933,reg:"Friesland",type:"IJsselmeer",rws:"MAKKUM"},{id:6,name:"Hindeloopen",lat:52.942,lon:5.4036,reg:"Friesland",type:"IJsselmeer"},{id:7,name:"Workum",lat:52.9811,lon:5.4436,reg:"Friesland",type:"IJsselmeer",rws:"MRKRMND"},{id:8,name:"Stavoren",lat:52.8862,lon:5.3583,reg:"Friesland",type:"IJsselmeer"},{id:9,name:"Enkhuizen",lat:52.7033,lon:5.2919,reg:"Noord-Holland",type:"IJsselmeer"},{id:10,name:"Medemblik",lat:52.7718,lon:5.1086,reg:"Noord-Holland",type:"IJsselmeer"},{id:11,name:"Hoorn (Markermeer)",lat:52.6424,lon:5.0593,reg:"Noord-Holland",type:"IJsselmeer",rws:"MRKRMND"},{id:12,name:"Muiderberg",lat:52.3288,lon:5.1058,reg:"Noord-Holland",type:"IJsselmeer"},{id:13,name:"Domburg",lat:51.5644,lon:3.4978,reg:"Zeeland",type:"Noordzee",rws:"VLISSGN"},{id:14,name:"Vrouwenpolder",lat:51.5889,lon:3.595,reg:"Zeeland",type:"Noordzee",rws:"VLISSGN"},{id:15,name:"Brouwersdam",lat:51.7469,lon:3.8644,reg:"Zuid-Holland",type:"Noordzee",rws:"BROUWHVSDT"},{id:16,name:"Ouddorp",lat:51.8167,lon:3.9333,reg:"Zuid-Holland",type:"Noordzee",rws:"BROUWHVSDT"},{id:17,name:"Rockanje",lat:51.8672,lon:4.0553,reg:"Zuid-Holland",type:"Noordzee"},{id:18,name:"Lemmer",lat:52.8439,lon:5.7117,reg:"Friesland",type:"IJsselmeer"},{id:19,name:"Vrouwenpolder (Veerse Dam)",lat:51.5556,lon:3.5967,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:20,name:"Wolphaartsdijk (Muidenweg)",lat:51.5283,lon:3.725,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:21,name:"Oranjeplaat",lat:51.515,lon:3.675,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:22,name:"Schotsman",lat:51.55,lon:3.71,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:23,name:"Kamperland",lat:51.57,lon:3.68,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:24,name:"Kortgene",lat:51.555,lon:3.795,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:25,name:"Breezand (Veerse Meer)",lat:51.56,lon:3.61,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"},{id:26,name:"Geersdijk",lat:51.54,lon:3.76,reg:"Zeeland",type:"Veerse Meer",rws:"ORANJPLT"}];
 const WD=["N","NNO","NO","ONO","O","OZO","ZO","ZZO","Z","ZZW","ZW","WZW","W","WNW","NW","NNW"];
 const d2d=d=>WD[Math.round(d/22.5)%16],ms2kn=m=>m*1.94384,pad=h=>String(h).padStart(2,"0");
+// Beaufort uit knopen (Open-Meteo levert nu direct knopen: wind_speed_unit=kn)
+const BFT_KN=[1,4,7,11,17,22,28,34,41,48,56,64];
+const bft=k=>{if(k==null||isNaN(k))return null;const r=Math.round(k);let b=0;while(b<12&&r>=BFT_KN[b])b++;return b;};
+const knB=k=>`${Math.round(k)} kn · ${bft(k)} Bft`;
 const dayN=s=>["Zo","Ma","Di","Wo","Do","Vr","Za"][new Date(s+"T12:00:00").getDay()];
 const fullDay=s=>["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"][new Date(s+"T12:00:00").getDay()];
 const fmtD=s=>{const m=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];const d=new Date(s+"T12:00:00");return`${d.getDate()} ${m[d.getMonth()]}`;};
-async function fetchW(lat,lon){return(await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m,temperature_2m,precipitation_probability,precipitation&timezone=Europe/Amsterdam&forecast_days=7`)).json();}
-function grp(h){const d={};h.time.forEach((t,i)=>{const day=t.split("T")[0];if(!d[day])d[day]=[];d[day].push({time:t,hour:+t.split("T")[1].split(":")[0],wind:ms2kn(h.wind_speed_10m[i]),gust:ms2kn(h.wind_gusts_10m[i]),dir:h.wind_direction_10m[i],temp:h.temperature_2m[i],rp:h.precipitation_probability?h.precipitation_probability[i]:0,rn:h.precipitation?h.precipitation[i]:0});});return d;}
+async function fetchW(lat,lon){return(await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m,temperature_2m,precipitation_probability,precipitation&wind_speed_unit=kn&timezone=Europe/Amsterdam&forecast_days=7`)).json();}
+function grp(h){const d={};h.time.forEach((t,i)=>{const day=t.split("T")[0];if(!d[day])d[day]=[];d[day].push({time:t,hour:+t.split("T")[1].split(":")[0],wind:h.wind_speed_10m[i],gust:h.wind_gusts_10m[i],dir:h.wind_direction_10m[i],temp:h.temperature_2m[i],rp:h.precipitation_probability?h.precipitation_probability[i]:0,rn:h.precipitation?h.precipitation[i]:0});});return d;}
 function pk(hrs){const dh=hrs.filter(h=>h.hour>=8&&h.hour<=20);if(!dh.length)return{avg:0,max:0,dir:0};return{avg:dh.reduce((s,h)=>s+h.wind,0)/dh.length,max:Math.max(...dh.map(h=>h.wind)),dir:dh.reduce((s,h)=>s+h.dir,0)/dh.length};}
 
 // Middelburg for bike forecast
@@ -220,7 +224,7 @@ function App(){
 
     <div style={{padding:"16px 20px 8px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
       {view==="detail"?<button onClick={()=>setView("home")} style={{background:t.btn,border:"none",color:t.text,borderRadius:12,padding:"8px 14px",fontSize:15,cursor:"pointer",fontFamily:"inherit"}}>← Terug</button>
-      :<div><div style={{fontSize:12,fontWeight:500,color:t.acc,letterSpacing:2.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:6}}>WindSurf NL<span style={{fontSize:10,fontWeight:700,background:`${t.acc}22`,color:t.acc,borderRadius:6,padding:"1px 6px",letterSpacing:0.5}}>v3.4</span></div><div style={{fontSize:24,fontWeight:800,letterSpacing:-0.5,marginTop:2}}>{view==="home"?"Dashboard":view==="spots"?"Alle Spots":view==="alerts"?"Alerts":view==="markt"?"Marktplaats":view==="kaart"?"🗺️ Kaart":view==="game"?"🎮 Game":"Instellingen"}</div></div>}
+      :<div><div style={{fontSize:12,fontWeight:500,color:t.acc,letterSpacing:2.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:6}}>WindSurf NL<span style={{fontSize:10,fontWeight:700,background:`${t.acc}22`,color:t.acc,borderRadius:6,padding:"1px 6px",letterSpacing:0.5}}>v3.5</span></div><div style={{fontSize:24,fontWeight:800,letterSpacing:-0.5,marginTop:2}}>{view==="home"?"Dashboard":view==="spots"?"Alle Spots":view==="alerts"?"Alerts":view==="markt"?"Marktplaats":view==="kaart"?"🗺️ Kaart":view==="game"?"🎮 Game":"Instellingen"}</div></div>}
       <div style={{display:"flex",alignItems:"center",gap:10}}>
         <button onClick={()=>setDark(!dark)} style={{background:t.btn,border:`1px solid ${t.cb}`,borderRadius:12,padding:"6px 10px",cursor:"pointer",fontSize:18,lineHeight:1,color:t.text}}>{dark?"☀️":"🌙"}</button>
         {view==="detail"&&selSpot&&<div style={{textAlign:"right"}}><div style={{fontSize:18,fontWeight:700}}>{selSpot.name}</div><div style={{fontSize:13,color:t.acc}}>{selSpot.type} · {selSpot.reg}</div></div>}
@@ -326,7 +330,7 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,onTap,t}){
   const LABEL_H=18; // knopen label boven staaf
   const CHART_H=100; // wind bars hoogte
   const ARROW_H=22; // pijl ruimte
-  const HOUR_H=22;  // uur labels + richting
+  const HOUR_H=33;  // uur labels + richting + Bft
   const TOTAL_H=LABEL_H+CHART_H+ARROW_H+HOUR_H;
   const RAIN_H=36;
 
@@ -367,7 +371,7 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,onTap,t}){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 14px 8px"}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <span style={{fontSize:15,fontWeight:700}}>{dayLabel}</span>
-          {hasGood&&<span style={{fontSize:11,fontWeight:700,color:"#fff",background:q.color,padding:"2px 8px",borderRadius:10}}>{q.label}</span>}
+          {hasGood&&<span style={{fontSize:11,fontWeight:700,color:"#fff",background:q.color,padding:"2px 8px",borderRadius:10}}>{q.label} · {knB(avgGood)}</span>}
         </div>
         <span style={{fontSize:13,color:t.tf}}>→</span>
       </div>
@@ -377,6 +381,8 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,onTap,t}){
         <div style={{width:SVG_W,minWidth:"100%"}}>
           <svg viewBox={`0 0 ${SVG_W} ${TOTAL_H}`} width={SVG_W} height={TOTAL_H} style={{display:"block"}}>
             {/* Y-as gridlijnen + labels */}
+            <text x={PAD_L-4} y={10} fill={t.tm} fontSize={8} textAnchor="end" fontFamily="JetBrains Mono">kn</text>
+            <text x={PAD_L-4} y={TOTAL_H-1} fill={t.tm} fontSize={8} textAnchor="end" fontFamily="JetBrains Mono">Bft</text>
             {yGridVals.map(v=>{
               const y=LABEL_H+CHART_H-yBar(v);
               return<g key={v}>
@@ -438,8 +444,9 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,onTap,t}){
             {/* Uur labels + windrichting X-as */}
             {dayHrs.map((h,i)=>(
               <g key={i}>
-                <text x={xCenter(i)} y={TOTAL_H-12} fill={t.tm} fontSize={9} textAnchor="middle" fontFamily="JetBrains Mono">{h.hour}</text>
-                <text x={xCenter(i)} y={TOTAL_H-1} fill={h.wind<1?t.gGrid:windCol(h.wind)} fontSize={8} textAnchor="middle" fontFamily="JetBrains Mono" fontWeight="600">{d2d(h.dir)}</text>
+                <text x={xCenter(i)} y={TOTAL_H-23} fill={t.tm} fontSize={9} textAnchor="middle" fontFamily="JetBrains Mono">{h.hour}</text>
+                <text x={xCenter(i)} y={TOTAL_H-12} fill={h.wind<1?t.gGrid:windCol(h.wind)} fontSize={8} textAnchor="middle" fontFamily="JetBrains Mono" fontWeight="600">{d2d(h.dir)}</text>
+                <text x={xCenter(i)} y={TOTAL_H-1} fill={t.tm} fontSize={8} textAnchor="middle" fontFamily="JetBrains Mono" fontWeight="700">{bft(h.wind)}B</text>
               </g>
             ))}
           </svg>
@@ -529,11 +536,12 @@ function Home({alerts,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,bikeData}
             <img src={bl.img} alt="" style={{width:44,height:44,marginTop:6,objectFit:"contain"}}/>
             <div style={{fontSize:22,fontWeight:800,color:bl.color,fontFamily:"JetBrains Mono",marginTop:4,lineHeight:1}}>{Math.round(peakW)}</div>
             <div style={{fontSize:10,color:t.tm}}>kn</div>
+            <div style={{fontSize:11,fontWeight:700,color:bl.color,marginTop:2}}>{bft(peakW)} Bft</div>
           </div>);
         })}
       </div>
       <div style={{display:"flex",justifyContent:"center",gap:6,marginTop:10,flexWrap:"wrap"}}>
-        {[{img:BIKE_IMGS[0],l:"<10kn"},{img:BIKE_IMGS[1],l:"10-15"},{img:BIKE_IMGS[2],l:"15-20"},{img:BIKE_IMGS[3],l:"20-25"},{img:BIKE_IMGS[4],l:"25+"}].map((x,i)=>
+        {[{img:BIKE_IMGS[0],l:"<10 kn (0-3 Bft)"},{img:BIKE_IMGS[1],l:"10-15 kn (3-4)"},{img:BIKE_IMGS[2],l:"15-20 kn (4-5)"},{img:BIKE_IMGS[3],l:"20-25 kn (5-6)"},{img:BIKE_IMGS[4],l:"25+ kn (6+)"}].map((x,i)=>
           <div key={i} style={{display:"flex",alignItems:"center",gap:3}}><img src={x.img} alt="" style={{width:18,height:18,objectFit:"contain"}}/><span style={{fontSize:9,color:t.tm}}>{x.l}</span></div>
         )}
       </div>
@@ -557,7 +565,7 @@ function Home({alerts,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,bikeData}
             </div>
             {/* Info */}
             <div style={{flex:1}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{fontSize:15,fontWeight:700}}>{a.spot.name}</span><span style={{fontSize:16,fontWeight:800,color:t.w.p,fontFamily:"JetBrains Mono"}}>{Math.round(a.avgWind)} kn</span></div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{fontSize:15,fontWeight:700}}>{a.spot.name}</span><span style={{fontSize:16,fontWeight:800,color:t.w.p,fontFamily:"JetBrains Mono"}}>{knB(a.avgWind)}</span></div>
               <div style={{fontSize:13,color:t.ts,marginTop:3}}>⏰ {pad(a.sh)}:00 - {pad(a.eh)}:00 · {d2d(a.dir)}</div>
               {a.ri.has?<div style={{fontSize:12,color:t.rain,marginTop:2}}>🌧️ {pad(a.ri.sh)}:00-{pad(a.ri.eh)}:00 ({a.ri.mp}%)</div>:<div style={{fontSize:12,color:t.dry,marginTop:2}}>☀️ Droog</div>}
             </div>
@@ -1124,7 +1132,7 @@ function VeerseMeerVerkenner(){
   .fc-hour { font-size:0.57rem; color:var(--text-dim); font-weight:600; width:24px; }
   .fc-bar-bg { flex:1; height:4px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; }
   .fc-bar-fill { height:100%; background:linear-gradient(90deg,#38d4f5,#7dff9e); border-radius:2px; }
-  .fc-speed { font-size:0.62rem; color:#fff; font-weight:700; width:38px; text-align:right; }
+  .fc-speed { font-size:0.62rem; color:#fff; font-weight:700; width:54px; text-align:right; white-space:nowrap; }
   .fc-dir { font-size:0.58rem; color:var(--text-dim); width:22px; }
 
   /* ---- COMPASS ---- */
@@ -1252,7 +1260,7 @@ function VeerseMeerVerkenner(){
   <div class="sdiv"></div>
   <div class="stat"><span class="sl">Zoom</span><span class="sv" id="iZoom">13</span></div>
   <div class="sdiv"></div>
-  <div class="stat"><span class="sl">Wind</span><span class="sv" id="iWind">— km/h</span></div>
+  <div class="stat"><span class="sl">Wind</span><span class="sv" id="iWind">— kn</span></div>
 </div><script>
 // === WOLPHAARTSDIJK START ===
 const ORANJEPLAAT = [51.5180, 3.7117];
@@ -1444,18 +1452,21 @@ function degToDir(d) {
   const dirs=['N','NNO','NO','ONO','O','OZO','ZO','ZZO','Z','ZZW','ZW','WZW','W','WNW','NW','NNW'];
   return dirs[Math.round(d/22.5)%16];
 }
-function mpsToKmh(v) { return Math.round(v*3.6); }
-function kmhToBft(k) {
-  if(k<1)return 0;if(k<6)return 1;if(k<12)return 2;if(k<20)return 3;
-  if(k<29)return 4;if(k<39)return 5;if(k<50)return 6;if(k<62)return 7;
-  if(k<75)return 8;if(k<89)return 9;if(k<103)return 10;if(k<117)return 11;
+// Open-Meteo levert knopen (wind_speed_unit=kn)
+function knR(v) { return Math.round(v); }
+function knToBft(k) {
+  k=Math.round(k);
+  if(k<1)return 0;if(k<4)return 1;if(k<7)return 2;if(k<11)return 3;
+  if(k<17)return 4;if(k<22)return 5;if(k<28)return 6;if(k<34)return 7;
+  if(k<41)return 8;if(k<48)return 9;if(k<56)return 10;if(k<64)return 11;
   return 12;
 }
+// grenzen omgerekend van km/h (5/20/40/60) naar knopen
 function windQuality(k) {
-  if(k<5)  return ['wq-calm',   '🌫 Windstil'];
-  if(k<20) return ['wq-light',  '🍃 Lichte bries'];
-  if(k<40) return ['wq-good',   '🏄 Goed surfen!'];
-  if(k<60) return ['wq-strong', '⚠ Sterke wind'];
+  if(k<3)  return ['wq-calm',   '🌫 Windstil'];
+  if(k<11) return ['wq-light',  '🍃 Lichte bries'];
+  if(k<22) return ['wq-good',   '🏄 Goed surfen!'];
+  if(k<32) return ['wq-strong', '⚠ Sterke wind'];
   return             ['wq-storm',  '⛈ Storm'];
 }
 
@@ -1465,16 +1476,16 @@ async function fetchWind() {
       + '?latitude=51.508&longitude=3.599'
       + '&current=wind_speed_10m,wind_direction_10m,wind_gusts_10m,apparent_temperature'
       + '&hourly=wind_speed_10m,wind_direction_10m'
-      + '&wind_speed_unit=ms&timezone=Europe%2FAmsterdam&forecast_days=1';
+      + '&wind_speed_unit=kn&timezone=Europe%2FAmsterdam&forecast_days=1';
 
     const r = await fetch(url);
     const d = await r.json();
     const c = d.current;
 
-    const spd  = mpsToKmh(c.wind_speed_10m);
-    const gust = mpsToKmh(c.wind_gusts_10m);
+    const spd  = knR(c.wind_speed_10m);
+    const gust = knR(c.wind_gusts_10m);
     const dir  = c.wind_direction_10m;
-    const bft  = kmhToBft(spd);
+    const bft  = knToBft(spd);
     const dirN = degToDir(dir);
     const temp = Math.round(c.apparent_temperature);
     const [qCls, qLbl] = windQuality(spd);
@@ -1486,13 +1497,13 @@ async function fetchWind() {
     for (let i = 0; i < 6; i++) {
       const hi = nowH + i;
       if (hi >= d.hourly.wind_speed_10m.length) break;
-      const hs = mpsToKmh(d.hourly.wind_speed_10m[hi]);
+      const hs = knR(d.hourly.wind_speed_10m[hi]);
       const hd = degToDir(d.hourly.wind_direction_10m[hi]);
-      const barW = Math.min(100, (hs / 70) * 100);
+      const barW = Math.min(100, (hs / 38) * 100);
       fcRows += \`<div class="fc-row">
         <span class="fc-hour">\${String(hi%24).padStart(2,'0')}u</span>
         <div class="fc-bar-bg"><div class="fc-bar-fill" style="width:\${barW}%"></div></div>
-        <span class="fc-speed">\${hs} km/h</span>
+        <span class="fc-speed">\${hs} kn · \${knToBft(hs)}</span>
         <span class="fc-dir">\${hd}</span>
       </div>\`;
     }
@@ -1501,7 +1512,7 @@ async function fetchWind() {
       <div class="wind-speed-row">
         <div class="wind-big">\${spd}</div>
         <div class="wind-meta">
-          <span class="wind-unit">km/h</span>
+          <span class="wind-unit">knopen</span>
           <span class="wind-bft">Bft \${bft}</span>
         </div>
       </div>
@@ -1517,7 +1528,7 @@ async function fetchWind() {
       <div class="wind-stats">
         <div class="ws-item">
           <span class="ws-label">Windstoot</span>
-          <span class="ws-val">\${gust} km/h</span>
+          <span class="ws-val">\${gust} kn · \${knToBft(gust)} Bft</span>
         </div>
         <div class="ws-item">
           <span class="ws-label">Gevoels T°</span>
@@ -1533,7 +1544,7 @@ async function fetchWind() {
       </div>
     \`;
 
-    document.getElementById('iWind').textContent = \`\${spd} km/h \${dirN}\`;
+    document.getElementById('iWind').textContent = \`\${spd} kn · \${bft} Bft \${dirN}\`;
 
   } catch(err) {
     document.getElementById('windBody').innerHTML =
@@ -1553,10 +1564,10 @@ setInterval(fetchWind, 5 * 60 * 1000);
 // ── SPOTS ──
 function Spots({spots,favs,tFav,oSpot,fReg,setFReg,regs,sData}){const t=useT();return(<div>
   <div style={{display:"flex",gap:8,marginTop:12,marginBottom:16,overflowX:"auto"}}>{regs.map(r=><button key={r} onClick={()=>setFReg(r)} style={{background:fReg===r?t.btnA:t.btn,border:fReg===r?`1px solid ${t.btnAB}`:`1px solid ${t.cb}`,color:fReg===r?t.acc:t.ts,borderRadius:20,padding:"7px 16px",fontSize:14,fontWeight:600,cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>{r}</button>)}</div>
-  {spots.map(s=>{const fav=favs.includes(s.id);const d=sData[s.id];let cw=null;if(d){cw=ms2kn(d.hourly.wind_speed_10m[Math.min(new Date().getHours(),d.hourly.wind_speed_10m.length-1)]);}const q=cw!==null?wc(cw,t):null;
+  {spots.map(s=>{const fav=favs.includes(s.id);const d=sData[s.id];let cw=null;if(d){cw=d.hourly.wind_speed_10m[Math.min(new Date().getHours(),d.hourly.wind_speed_10m.length-1)];}const q=cw!==null?wc(cw,t):null;
     return(<div key={s.id} style={{display:"flex",alignItems:"center",gap:12,background:t.card,border:`1px solid ${t.cb}`,borderRadius:14,padding:"12px 14px",marginBottom:8,cursor:"pointer"}} onClick={()=>oSpot(s)}>
       <div style={{flex:1}}><div style={{fontSize:16,fontWeight:700}}>{s.name}</div><div style={{fontSize:13,color:t.acc}}>{s.reg} · {s.type}</div></div>
-      {q&&<div style={{textAlign:"center",marginRight:8}}><div style={{fontSize:18,fontWeight:800,color:q.color}}>{Math.round(cw)}</div><div style={{fontSize:11,color:t.tm}}>kn</div></div>}
+      {q&&<div style={{textAlign:"center",marginRight:8}}><div style={{fontSize:18,fontWeight:800,color:q.color}}>{Math.round(cw)}</div><div style={{fontSize:11,color:t.tm}}>kn · {bft(cw)} Bft</div></div>}
       <button onClick={e=>{e.stopPropagation();tFav(s.id);}} style={{background:"none",border:"none",fontSize:22,cursor:"pointer",color:fav?t.stOn:t.stOff,padding:4}}>{fav?"★":"☆"}</button>
     </div>);
   })}
@@ -1810,7 +1821,7 @@ function LiveBlock({spot,minW,maxW}){
                 {live.windOk?(
                   <>
                     <div style={{fontSize:54,fontWeight:900,fontFamily:"JetBrains Mono",lineHeight:1,color:windColor}}>{windKn}</div>
-                    <div style={{fontSize:12,color:t.tm,marginTop:3,textTransform:"uppercase",letterSpacing:0.5}}>knopen gemiddeld</div>
+                    <div style={{fontSize:12,color:t.tm,marginTop:3,textTransform:"uppercase",letterSpacing:0.5}}>knopen gemiddeld · <b style={{color:windColor}}>{bft(windKn)} Bft</b></div>
                     {windLabel&&<div style={{display:"inline-flex",alignItems:"center",gap:4,marginTop:8,background:`${windColor}20`,border:`1px solid ${windColor}44`,borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:700,color:windColor}}>{windLabel==="Perfect voor sessie"?"✓ ":""}{windLabel}</div>}
                   </>
                 ):(
@@ -1874,6 +1885,7 @@ function Detail({spot,data,selDay,setSelDay,minW,maxW}){const t=useT();
   const totalRain=dayHrs.reduce((s,h)=>s+(h.rn||0),0);
   const maxRain=Math.max(...dayHrs.map(h=>h.rn||0),0.1);
   const dryHrs=dayHrs.filter(h=>(h.rn||0)<0.1&&(h.rp||0)<30).length;
+  const gH=hrs.filter(h=>h.hour>=8&&h.hour<=20);const maxGust=gH.length?Math.max(...gH.map(h=>h.gust||0)):p.max;
 
   return(<div style={{marginTop:8}}>
     {/* Tab toggle — alleen tonen als spot een RWS station heeft */}
@@ -1897,10 +1909,10 @@ function Detail({spot,data,selDay,setSelDay,minW,maxW}){const t=useT();
       <>
         <div style={{background:q.bg,border:`1px solid ${q.color}33`,borderRadius:20,padding:"24px 20px",marginBottom:16,textAlign:"center"}}>
           <div style={{fontSize:56,fontWeight:900,color:q.color,lineHeight:1,fontFamily:"JetBrains Mono"}}>{Math.round(p.avg)}</div>
-          <div style={{fontSize:15,color:t.ts,marginTop:4}}>knopen gemiddeld</div>
+          <div style={{fontSize:15,color:t.ts,marginTop:4}}>knopen gemiddeld · <b style={{color:q.color}}>{bft(p.avg)} Bft</b></div>
           <div style={{display:"inline-block",marginTop:10,padding:"4px 14px",background:`${q.color}22`,borderRadius:20,color:q.color,fontSize:14,fontWeight:700}}>{q.label}</div>
           <div style={{display:"flex",justifyContent:"center",gap:20,marginTop:18}}>
-            <div><div style={{fontSize:13,color:t.tm}}>Vlagen</div><div style={{fontSize:20,fontWeight:700,fontFamily:"JetBrains Mono"}}>{Math.round(p.max)}</div></div>
+            <div><div style={{fontSize:13,color:t.tm}}>Vlagen</div><div style={{fontSize:20,fontWeight:700,fontFamily:"JetBrains Mono"}}>{Math.round(maxGust)}</div><div style={{fontSize:11,color:t.tm}}>kn · {bft(maxGust)} Bft</div></div>
             <div><CArrow deg={p.dir} size={32} color={q.color}/><div style={{fontSize:13,color:t.tm,marginTop:2}}>{d2d(p.dir)}</div></div>
             <div><div style={{fontSize:13,color:t.tm}}>Temp</div><div style={{fontSize:20,fontWeight:700,fontFamily:"JetBrains Mono"}}>{Math.round(hrs.find(h=>h.hour===14)?.temp||hrs[0]?.temp||0)}°</div></div>
             <div><div style={{fontSize:13,color:t.tm}}>Regen</div><div style={{fontSize:20,fontWeight:700,fontFamily:"JetBrains Mono",color:totalRain>1?t.rain:t.dry}}>{totalRain.toFixed(1)}<span style={{fontSize:12}}>mm</span></div></div>
@@ -1911,13 +1923,13 @@ function Detail({spot,data,selDay,setSelDay,minW,maxW}){const t=useT();
             <div style={{fontSize:12,color:t.ts}}>🕐 {dryHrs} droge uren</div>
           </div>
         </div>
-        <div style={{display:"flex",gap:4,marginBottom:16,overflowX:"auto"}}>{dk.map(d=>{const dp=pk(days[d]),dq=wc(dp.avg,t),isA=d===act;return(<button key={d} onClick={()=>setSelDay(d)} style={{flex:1,minWidth:48,padding:"10px 4px",background:isA?t.btnA:t.ch,border:isA?`1px solid ${t.btnAB}`:`1px solid ${t.cb}`,borderRadius:12,cursor:"pointer",textAlign:"center",fontFamily:"inherit",color:t.text}}><div style={{fontSize:12,fontWeight:600,color:isA?t.acc:t.tm}}>{dayN(d)}</div><div style={{fontSize:17,fontWeight:800,color:dq.color,marginTop:3}}>{Math.round(dp.avg)}</div><div style={{width:6,height:6,borderRadius:3,background:dq.color,margin:"4px auto 0",opacity:0.8}}/></button>);})}</div>
+        <div style={{display:"flex",gap:4,marginBottom:16,overflowX:"auto"}}>{dk.map(d=>{const dp=pk(days[d]),dq=wc(dp.avg,t),isA=d===act;return(<button key={d} onClick={()=>setSelDay(d)} style={{flex:1,minWidth:48,padding:"10px 4px",background:isA?t.btnA:t.ch,border:isA?`1px solid ${t.btnAB}`:`1px solid ${t.cb}`,borderRadius:12,cursor:"pointer",textAlign:"center",fontFamily:"inherit",color:t.text}}><div style={{fontSize:12,fontWeight:600,color:isA?t.acc:t.tm}}>{dayN(d)}</div><div style={{fontSize:17,fontWeight:800,color:dq.color,marginTop:3}}>{Math.round(dp.avg)}</div><div style={{fontSize:10,color:t.tm}}>{bft(dp.avg)} Bft</div><div style={{width:6,height:6,borderRadius:3,background:dq.color,margin:"4px auto 0",opacity:0.8}}/></button>);})}</div>
         <Sec t={fullDay(act)} s={fmtD(act)}/>
         <div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,overflow:"hidden"}}>
           <div style={{display:"flex",alignItems:"center",padding:"8px 14px",borderBottom:`1px solid ${t.div}`,background:t.ch}}>
             <div style={{width:52,fontSize:11,color:t.tm,fontWeight:600}}>Tijd</div>
             <div style={{flex:1,fontSize:11,color:t.tm,fontWeight:600}}>Wind</div>
-            <div style={{width:48,textAlign:"right",fontSize:11,color:t.tm,fontWeight:600}}>kn</div>
+            <div style={{width:76,textAlign:"right",fontSize:11,color:t.tm,fontWeight:600}}>kn · Bft</div>
             <div style={{width:64,textAlign:"center",fontSize:11,color:t.tm,fontWeight:600}}>Regen</div>
             <div style={{width:28,textAlign:"right",fontSize:11,color:t.tm,fontWeight:600}}>°C</div>
           </div>
@@ -1927,9 +1939,10 @@ function Detail({spot,data,selDay,setSelDay,minW,maxW}){const t=useT();
               <div style={{flex:1,paddingRight:6}}>
                 <div style={{height:6,borderRadius:3,background:`linear-gradient(90deg,${hq.color}44,${hq.color})`,width:`${Math.min((h.wind/35)*100,100)}%`}}/>
               </div>
-              <div style={{width:48,display:"flex",alignItems:"center",justifyContent:"flex-end",gap:4}}>
+              <div style={{width:76,display:"flex",alignItems:"center",justifyContent:"flex-end",gap:4}}>
                 <CArrow deg={h.dir} size={13} color={hq.color}/>
                 <span style={{fontSize:14,fontWeight:700,color:hq.color,fontFamily:"JetBrains Mono"}}>{Math.round(h.wind)}</span>
+                <span style={{fontSize:11,fontWeight:600,color:t.tm,fontFamily:"JetBrains Mono",minWidth:22,textAlign:"right"}}>{bft(h.wind)}</span>
               </div>
               <div style={{width:64,textAlign:"center"}}>
                 {hasRain?(<div><div style={{height:4,borderRadius:2,background:t.rain,width:`${rainPct}%`,margin:"0 auto 2px",maxWidth:44}}/><div style={{fontSize:11,color:t.rain,fontFamily:"JetBrains Mono",fontWeight:700}}>{rn.toFixed(1)}mm</div></div>
@@ -1949,6 +1962,7 @@ function Detail({spot,data,selDay,setSelDay,minW,maxW}){const t=useT();
             <div style={{display:"flex",justifyContent:"center",gap:20,marginTop:4}}>
               <div style={{display:"flex",alignItems:"center",gap:4}}><div style={{width:14,height:2.5,background:t.gLine,borderRadius:2}}/><span style={{fontSize:11,color:t.tm}}>Wind</span></div>
               <div style={{display:"flex",alignItems:"center",gap:4}}><div style={{width:14,height:1.5,background:t.gGust,borderRadius:2}}/><span style={{fontSize:11,color:t.tm}}>Vlagen</span></div>
+              <span style={{fontSize:11,color:t.tm}}>in knopen</span>
               <div style={{display:"flex",alignItems:"center",gap:4}}><div style={{width:14,height:6,background:t.gIdeal,borderRadius:1}}/><span style={{fontSize:11,color:t.tm}}>Ideaal</span></div>
             </div>
           </div>
@@ -1989,9 +2003,9 @@ function Settings({minW,setMinW,maxW,setMaxW,alertsOn,setAlertsOn,sSort,setSSort
     {/* WIND RANGE */}
     <div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"20px 18px",marginBottom:12}}>
       <div style={{fontSize:16,fontWeight:700,marginBottom:16}}>Wind Alert Range</div>
-      <div style={{marginBottom:16}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{fontSize:14,color:t.ts}}>Minimum wind</span><span style={{fontSize:16,fontWeight:700,fontFamily:"JetBrains Mono",color:t.acc}}>{minW} kn</span></div><input type="range" min={5} max={30} value={minW} onChange={e=>setMinW(Math.min(+e.target.value,maxW-1))} style={{width:"100%"}}/></div>
-      <div style={{marginBottom:8}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{fontSize:14,color:t.ts}}>Maximum wind</span><span style={{fontSize:16,fontWeight:700,fontFamily:"JetBrains Mono",color:t.acc}}>{maxW} kn</span></div><input type="range" min={10} max={40} value={maxW} onChange={e=>setMaxW(Math.max(+e.target.value,minW+1))} style={{width:"100%"}}/></div>
-      <div style={{marginTop:14,padding:"10px 14px",background:t.sGreen,borderRadius:10,fontSize:14,color:t.sGreenT,textAlign:"center"}}>Ideale range: {minW} - {maxW} knopen</div>
+      <div style={{marginBottom:16}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{fontSize:14,color:t.ts}}>Minimum wind</span><span style={{fontSize:16,fontWeight:700,fontFamily:"JetBrains Mono",color:t.acc}}>{minW} kn · {bft(minW)} Bft</span></div><input type="range" min={5} max={30} value={minW} onChange={e=>setMinW(Math.min(+e.target.value,maxW-1))} style={{width:"100%"}}/></div>
+      <div style={{marginBottom:8}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{fontSize:14,color:t.ts}}>Maximum wind</span><span style={{fontSize:16,fontWeight:700,fontFamily:"JetBrains Mono",color:t.acc}}>{maxW} kn · {bft(maxW)} Bft</span></div><input type="range" min={10} max={40} value={maxW} onChange={e=>setMaxW(Math.max(+e.target.value,minW+1))} style={{width:"100%"}}/></div>
+      <div style={{marginTop:14,padding:"10px 14px",background:t.sGreen,borderRadius:10,fontSize:14,color:t.sGreenT,textAlign:"center"}}>Ideale range: {minW} - {maxW} knopen ({bft(minW)}-{bft(maxW)} Bft)</div>
     </div>
 
     {/* NOTIFICATIONS */}
@@ -2004,7 +2018,7 @@ function Settings({minW,setMinW,maxW,setMaxW,alertsOn,setAlertsOn,sSort,setSSort
     {/* LEGEND */}
     <div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"16px 18px"}}>
       <div style={{fontSize:16,fontWeight:700,marginBottom:8}}>Legenda</div>
-      {[{l:"Perfect (15-25 kn)",c:t.w.p},{l:"Matig (12-15 kn)",c:t.w.m},{l:"Sterk (25-30 kn)",c:t.w.s},{l:"Gevaarlijk (30+ kn)",c:t.w.g},{l:"Te zwak (<12 kn)",c:t.w.z}].map(i=><div key={i.l} style={{display:"flex",alignItems:"center",gap:10,padding:"6px 0"}}><div style={{width:10,height:10,borderRadius:5,background:i.c}}/><span style={{fontSize:14,color:t.ts}}>{i.l}</span></div>)}
+      {[{l:"Perfect (15-25 kn · 4-6 Bft)",c:t.w.p},{l:"Matig (12-15 kn · 4 Bft)",c:t.w.m},{l:"Sterk (25-30 kn · 6-7 Bft)",c:t.w.s},{l:"Gevaarlijk (30+ kn · 7+ Bft)",c:t.w.g},{l:"Te zwak (<12 kn · 0-4 Bft)",c:t.w.z}].map(i=><div key={i.l} style={{display:"flex",alignItems:"center",gap:10,padding:"6px 0"}}><div style={{width:10,height:10,borderRadius:5,background:i.c}}/><span style={{fontSize:14,color:t.ts}}>{i.l}</span></div>)}
     </div>
   </div>);
 }
@@ -2015,9 +2029,10 @@ function Sec({t:title,s:sub}){const t=useT();return(<div style={{marginTop:20,ma
 function SC({a,tap}){const t=useT();const q=wc(a.avgWind,t);return(
   <div onClick={tap} style={{flexShrink:0,width:"calc(85vw - 32px)",maxWidth:340,background:q.bg,border:`1px solid ${q.color}33`,borderRadius:18,padding:"18px",cursor:"pointer",scrollSnapAlign:"start",display:"flex",flexDirection:"column",gap:12}}>
     <div style={{display:"flex",alignItems:"center",gap:14}}>
-      <div style={{width:60,height:60,borderRadius:16,background:`${q.color}15`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+      <div style={{width:64,height:72,borderRadius:16,background:`${q.color}15`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0}}>
         <div style={{fontSize:26,fontWeight:900,color:q.color,fontFamily:"JetBrains Mono",lineHeight:1}}>{Math.round(a.avgWind)}</div>
         <div style={{fontSize:11,color:q.color,opacity:0.7}}>kn</div>
+        <div style={{fontSize:11,fontWeight:700,color:q.color}}>{bft(a.avgWind)} Bft</div>
       </div>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontSize:17,fontWeight:700,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{a.spot.name}</div>
