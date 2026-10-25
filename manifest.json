@@ -1,17 +1,32 @@
 {
-  "name": "WindSurf NL",
-  "short_name": "WindSurf",
-  "description": "Nederlandse windsurf wind alert app",
+  "name": "Windsurf en Fiets",
+  "short_name": "WindFiets",
+  "version": "4.0.0",
+  "description": "Windalerts voor windsurfspots en fietswind in Nederland",
+  "lang": "nl",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1628",
-  "theme_color": "#0a1628",
-  "orientation": "portrait",
+  "background_color": "#f0f4f8",
+  "theme_color": "#2b6cb0",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏄‍♂️</text></svg>",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

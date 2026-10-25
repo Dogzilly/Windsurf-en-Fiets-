@@ -1,0 +1,28 @@
+# UITGESCHAKELD. Verplaats naar .github/workflows/rws.yml om te activeren.
+# Haalt elke 20 minuten RWS-metingen op en commit data/rws.json, zodat de app (GitHub Pages,
+# zonder eigen server) actuele metingen same-origin kan lezen.
+# Let op: geplande workflows draaien niet exact op tijd (GitHub kan ze vertragen/overslaan)
+# en elke run is een commit op de Pages-branch.
+name: RWS metingen ophalen
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: { group: rws, cancel-in-progress: true }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/fetch-rws.mjs
+      - name: Commit als er iets veranderd is
+        run: |
+          git config user.name "rws-bot"
+          git config user.email "rws-bot@users.noreply.github.com"
+          git add data/rws.json
+          git diff --cached --quiet || git commit -m "data: RWS-metingen bijgewerkt"
+          git push
