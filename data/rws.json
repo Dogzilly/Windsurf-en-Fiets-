@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-25T20:58:38.583Z",
+ "generated": "2026-10-25T23:09:24.080Z",
  "source": "Rijkswaterstaat ddapi20 OphalenLaatsteWaarnemingen",
  "stations": [
   {
@@ -7,36 +7,36 @@
    "naam": "Andijk",
    "lat": 52.7503,
    "lon": 5.265,
-   "temp": 10.7,
-   "temp_ts": "2026-10-25T21:30:00.000+01:00"
+   "temp": 10.6,
+   "temp_ts": "2026-10-25T23:50:00.000+01:00"
   },
   {
    "code": "haringvliet.3",
    "naam": "Haringvliet, Kier3",
    "lat": 51.826,
    "lon": 4.0512,
-   "temp": 12.6,
-   "temp_ts": "2026-10-25T21:40:00.000+01:00"
+   "temp": 12.5,
+   "temp_ts": "2026-10-25T23:50:00.000+01:00"
   },
   {
    "code": "hoekvanholland",
    "naam": "Hoek van Holland",
    "lat": 51.9769,
    "lon": 4.1198,
-   "wind_ms": 15.88,
-   "wind_ts": "2026-10-25T21:20:00.000+01:00",
-   "dir": 271.9,
+   "wind_ms": 15.59,
+   "wind_ts": "2026-10-25T23:30:00.000+01:00",
+   "dir": 270.7,
    "temp": 13.7,
-   "temp_ts": "2026-10-25T21:30:00.000+01:00"
+   "temp_ts": "2026-10-25T23:40:00.000+01:00"
   },
   {
    "code": "ijgeul.1",
    "naam": "IJGeul 1",
    "lat": 52.4639,
    "lon": 4.5176,
-   "wind_ms": 16.59,
-   "wind_ts": "2026-10-25T21:30:00.000+01:00",
-   "dir": 279.6
+   "wind_ms": 15.92,
+   "wind_ts": "2026-10-25T23:40:00.000+01:00",
+   "dir": 283
   },
   {
    "code": "ijmuiden.buitenhaven",
@@ -44,81 +44,81 @@
    "lat": 52.463,
    "lon": 4.555,
    "temp": 13.9,
-   "temp_ts": "2026-10-25T21:30:00.000+01:00"
+   "temp_ts": "2026-10-25T23:40:00.000+01:00"
   },
   {
    "code": "ijmuiden.havenhoofd.zuid",
    "naam": "IJmuiden, havenhoofd zuid",
    "lat": 52.4637,
    "lon": 4.5323,
-   "wind_ms": 17.04,
-   "wind_ts": "2026-10-25T21:40:00.000+01:00",
-   "dir": 268.9
+   "wind_ms": 15.8,
+   "wind_ts": "2026-10-25T23:50:00.000+01:00",
+   "dir": 269.6
   },
   {
    "code": "kamperland.schotsman",
    "naam": "Kamperland, Schotsman",
    "lat": 51.5816,
    "lon": 3.6433,
-   "temp": 12.4,
-   "temp_ts": "2026-10-25T21:30:00.000+01:00"
+   "temp": 12.3,
+   "temp_ts": "2026-10-25T23:40:00.000+01:00"
   },
   {
    "code": "kats.zandkreeksluis.buiten",
    "naam": "Kats Zandkreeksluis buiten",
    "lat": 51.544,
    "lon": 3.8592,
-   "wind_ms": 10.19,
-   "wind_ts": "2026-10-25T21:30:00.000+01:00",
-   "dir": 269.7
+   "wind_ms": 7.69,
+   "wind_ts": "2026-10-25T23:50:00.000+01:00",
+   "dir": 263.9
   },
   {
    "code": "kornwerderzand.ijsselmeer.vaargeul",
    "naam": "Kornwerderzand IJsselmeer vaargeul",
    "lat": 53.0487,
    "lon": 5.3448,
-   "temp": 10.5,
-   "temp_ts": "2026-10-25T21:40:00.000+01:00"
+   "temp": 10.4,
+   "temp_ts": "2026-10-25T23:40:00.000+01:00"
   },
   {
    "code": "markermeer.midden",
    "naam": "Markermeer, midden",
    "lat": 52.5317,
    "lon": 5.2312,
-   "wind_ms": 13.88,
-   "wind_ts": "2026-10-25T21:40:00.000+01:00",
-   "dir": 272.7
+   "wind_ms": 11.71,
+   "wind_ts": "2026-10-25T23:40:00.000+01:00",
+   "dir": 271.1
   },
   {
    "code": "rotterdamsehoek.ijsselmeer",
    "naam": "Rotterdamsehoek IJsselmeer",
    "lat": 52.7487,
    "lon": 5.552,
-   "wind_ms": 13.86,
-   "wind_ts": "2026-10-25T21:40:00.000+01:00",
-   "dir": 256.9,
+   "wind_ms": 12.8,
+   "wind_ts": "2026-10-25T23:50:00.000+01:00",
+   "dir": 253.4,
    "temp": 10.8,
-   "temp_ts": "2026-10-25T21:40:00.000+01:00"
+   "temp_ts": "2026-10-25T23:50:00.000+01:00"
   },
   {
    "code": "stellendam.haringvlietsluizen.schuif1",
    "naam": "Stellendam, Haringvlietsluizen",
    "lat": 51.8362,
    "lon": 4.0544,
-   "wind_ms": 15.5,
-   "wind_ts": "2026-10-25T21:30:00.000+01:00",
-   "dir": 274
+   "wind_ms": 12,
+   "wind_ts": "2026-10-25T23:50:00.000+01:00",
+   "dir": 269
   },
   {
    "code": "vlissingen",
    "naam": "Vlissingen",
    "lat": 51.442,
    "lon": 3.6,
-   "wind_ms": 11.44,
-   "wind_ts": "2026-10-25T21:30:00.000+01:00",
-   "dir": 272.5,
-   "temp": 13.6,
-   "temp_ts": "2026-10-25T21:30:00.000+01:00"
+   "wind_ms": 12.93,
+   "wind_ts": "2026-10-25T23:30:00.000+01:00",
+   "dir": 265.9,
+   "temp": 13.5,
+   "temp_ts": "2026-10-25T23:40:00.000+01:00"
   }
  ]
 }
