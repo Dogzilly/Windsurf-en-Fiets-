@@ -43,7 +43,7 @@ De gebouwde bestanden in de repo-root (`index.html`, `app.js`, `sw.js`, `manifes
     1. een optionele proxy-URL uit Instellingen;
     2. anders `data/rws.json`;
     3. anders alleen het model.
-  - `data/rws.json` actueel houden zonder eigen server kan met `.github/workflows-disabled/rws.yml`. Die staat **uit**; verplaats hem naar `.github/workflows/` om hem te activeren. Hij draait elke ~20 minuten (GitHub kan dat vertragen) en maakt dan een commit.
+  - `data/rws.json` wordt actueel gehouden door de GitHub Action `.github/workflows/rws.yml` (elk half uur, :07 en :37; GitHub kan dat vertragen). Elke run met nieuwe metingen is één commit op `main`.
   - Echte live-data vereist een proxy die:
     - het POST-verzoek 1-op-1 doorstuurt naar `https://ddapi20-waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES/OphalenLaatsteWaarnemingen`;
     - `Access-Control-Allow-Origin` en `OPTIONS` afhandelt.

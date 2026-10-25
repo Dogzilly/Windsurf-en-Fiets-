@@ -1,6 +1,6 @@
 // Haalt de laatste RWS-waarnemingen (ddapi20) op en schrijft data/rws.json.
 // Waarom: ddapi20 stuurt GEEN CORS-header, dus de browser mag het niet rechtstreeks lezen.
-// Dit script draait lokaal (`npm run rws`) of in de (uitgeschakelde) GitHub Action en levert
+// Dit script draait lokaal (`npm run rws`) of in de GitHub Action (.github/workflows/rws.yml) en levert
 // een same-origin bestand dat de app zonder eigen server kan lezen.
 import { writeFileSync, mkdirSync } from "node:fs";
 import { RWS_BASE } from "../src/stations.js";
