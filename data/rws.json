@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T01:33:58.722Z",
+ "generated": "2026-10-26T06:53:07.174Z",
  "source": "Rijkswaterstaat ddapi20 OphalenLaatsteWaarnemingen",
  "stations": [
   {
@@ -7,8 +7,8 @@
    "naam": "Andijk",
    "lat": 52.7503,
    "lon": 5.265,
-   "temp": 10.5,
-   "temp_ts": "2026-10-26T02:10:00.000+01:00"
+   "temp": 10.4,
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   },
   {
    "code": "haringvliet.3",
@@ -16,61 +16,61 @@
    "lat": 51.826,
    "lon": 4.0512,
    "temp": 12.5,
-   "temp_ts": "2026-10-26T02:20:00.000+01:00"
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   },
   {
    "code": "hoekvanholland",
    "naam": "Hoek van Holland",
    "lat": 51.9769,
    "lon": 4.1198,
-   "wind_ms": 13.32,
-   "wind_ts": "2026-10-26T02:00:00.000+01:00",
-   "dir": 267.7,
-   "temp": 13.7,
-   "temp_ts": "2026-10-26T02:10:00.000+01:00"
+   "wind_ms": 8.7,
+   "wind_ts": "2026-10-26T07:30:00.000+01:00",
+   "dir": 252.9,
+   "temp": 13.5,
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   },
   {
    "code": "ijgeul.1",
    "naam": "IJGeul 1",
    "lat": 52.4639,
    "lon": 4.5176,
-   "wind_ms": 14.84,
-   "wind_ts": "2026-10-26T02:10:00.000+01:00",
-   "dir": 274.9
+   "wind_ms": 10.77,
+   "wind_ts": "2026-10-26T07:30:00.000+01:00",
+   "dir": 275.3
   },
   {
    "code": "ijmuiden.buitenhaven",
    "naam": "IJmuiden, buitenhaven",
    "lat": 52.463,
    "lon": 4.555,
-   "temp": 14,
-   "temp_ts": "2026-10-26T02:10:00.000+01:00"
+   "temp": 13.9,
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   },
   {
    "code": "ijmuiden.havenhoofd.zuid",
    "naam": "IJmuiden, havenhoofd zuid",
    "lat": 52.4637,
    "lon": 4.5323,
-   "wind_ms": 14.19,
-   "wind_ts": "2026-10-26T02:10:00.000+01:00",
-   "dir": 267.1
+   "wind_ms": 11.22,
+   "wind_ts": "2026-10-26T07:40:00.000+01:00",
+   "dir": 266.2
   },
   {
    "code": "kamperland.schotsman",
    "naam": "Kamperland, Schotsman",
    "lat": 51.5816,
    "lon": 3.6433,
-   "temp": 12.3,
-   "temp_ts": "2026-10-26T02:20:00.000+01:00"
+   "temp": 12.2,
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   },
   {
    "code": "kats.zandkreeksluis.buiten",
    "naam": "Kats Zandkreeksluis buiten",
    "lat": 51.544,
    "lon": 3.8592,
-   "wind_ms": 7.03,
-   "wind_ts": "2026-10-26T02:20:00.000+01:00",
-   "dir": 270.1
+   "wind_ms": 3.97,
+   "wind_ts": "2026-10-26T07:30:00.000+01:00",
+   "dir": 192.6
   },
   {
    "code": "kornwerderzand.ijsselmeer.vaargeul",
@@ -78,47 +78,47 @@
    "lat": 53.0487,
    "lon": 5.3448,
    "temp": 10.3,
-   "temp_ts": "2026-10-26T02:10:00.000+01:00"
+   "temp_ts": "2026-10-26T07:40:00.000+01:00"
   },
   {
    "code": "markermeer.midden",
    "naam": "Markermeer, midden",
    "lat": 52.5317,
    "lon": 5.2312,
-   "wind_ms": 11.59,
-   "wind_ts": "2026-10-26T02:10:00.000+01:00",
-   "dir": 266.2
+   "wind_ms": 7.36,
+   "wind_ts": "2026-10-26T07:40:00.000+01:00",
+   "dir": 240.3
   },
   {
    "code": "rotterdamsehoek.ijsselmeer",
    "naam": "Rotterdamsehoek IJsselmeer",
    "lat": 52.7487,
    "lon": 5.552,
-   "wind_ms": 12.21,
-   "wind_ts": "2026-10-26T02:10:00.000+01:00",
-   "dir": 251.7,
-   "temp": 10.7,
-   "temp_ts": "2026-10-26T02:20:00.000+01:00"
+   "wind_ms": 6.78,
+   "wind_ts": "2026-10-26T07:30:00.000+01:00",
+   "dir": 235.7,
+   "temp": 10.5,
+   "temp_ts": "2026-10-26T07:40:00.000+01:00"
   },
   {
    "code": "stellendam.haringvlietsluizen.schuif1",
    "naam": "Stellendam, Haringvlietsluizen",
    "lat": 51.8362,
    "lon": 4.0544,
-   "wind_ms": 11.8,
-   "wind_ts": "2026-10-26T02:10:00.000+01:00",
-   "dir": 271
+   "wind_ms": 5.5,
+   "wind_ts": "2026-10-26T07:30:00.000+01:00",
+   "dir": 256
   },
   {
    "code": "vlissingen",
    "naam": "Vlissingen",
    "lat": 51.442,
    "lon": 3.6,
-   "wind_ms": 12.51,
-   "wind_ts": "2026-10-26T02:00:00.000+01:00",
-   "dir": 269.9,
-   "temp": 13.4,
-   "temp_ts": "2026-10-26T02:20:00.000+01:00"
+   "wind_ms": 7.5,
+   "wind_ts": "2026-10-26T07:20:00.000+01:00",
+   "dir": 209.5,
+   "temp": 13.3,
+   "temp_ts": "2026-10-26T07:30:00.000+01:00"
   }
  ]
 }
