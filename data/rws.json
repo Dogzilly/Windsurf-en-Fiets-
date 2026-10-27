@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-27T04:48:53.347Z",
+ "generated": "2026-10-27T10:22:05.491Z",
  "source": "Rijkswaterstaat ddapi20 OphalenLaatsteWaarnemingen",
  "stations": [
   {
@@ -7,8 +7,8 @@
    "naam": "Andijk",
    "lat": 52.7503,
    "lon": 5.265,
-   "temp": 10.8,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "temp": 10.9,
+   "temp_ts": "2026-10-27T11:00:00.000+01:00"
   },
   {
    "code": "haringvliet.3",
@@ -16,109 +16,109 @@
    "lat": 51.826,
    "lon": 4.0512,
    "temp": 12.3,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "temp_ts": "2026-10-27T10:50:00.000+01:00"
   },
   {
    "code": "hoekvanholland",
    "naam": "Hoek van Holland",
    "lat": 51.9769,
    "lon": 4.1198,
-   "wind_ms": 10.06,
-   "wind_ts": "2026-10-27T05:10:00.000+01:00",
-   "dir": 185.9,
-   "temp": 13.7,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "wind_ms": 11.77,
+   "wind_ts": "2026-10-27T10:50:00.000+01:00",
+   "dir": 194.4,
+   "temp": 13.3,
+   "temp_ts": "2026-10-27T11:00:00.000+01:00"
   },
   {
    "code": "ijgeul.1",
    "naam": "IJGeul 1",
    "lat": 52.4639,
    "lon": 4.5176,
-   "wind_ms": 11.65,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 192.7
+   "wind_ms": 12.41,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 197.3
   },
   {
    "code": "ijmuiden.buitenhaven",
    "naam": "IJmuiden, buitenhaven",
    "lat": 52.463,
    "lon": 4.555,
-   "temp": 14.1,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "temp": 14.2,
+   "temp_ts": "2026-10-27T11:00:00.000+01:00"
   },
   {
    "code": "ijmuiden.havenhoofd.zuid",
    "naam": "IJmuiden, havenhoofd zuid",
    "lat": 52.4637,
    "lon": 4.5323,
-   "wind_ms": 9.98,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 185
+   "wind_ms": 11.35,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 193.7
   },
   {
    "code": "kamperland.schotsman",
    "naam": "Kamperland, Schotsman",
    "lat": 51.5816,
    "lon": 3.6433,
-   "temp": 11.9,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "temp": 12.1,
+   "temp_ts": "2026-10-27T10:50:00.000+01:00"
   },
   {
    "code": "kats.zandkreeksluis.buiten",
    "naam": "Kats Zandkreeksluis buiten",
    "lat": 51.544,
    "lon": 3.8592,
-   "wind_ms": 6.91,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 182.4
+   "wind_ms": 8,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 190.2
   },
   {
    "code": "kornwerderzand.ijsselmeer.vaargeul",
    "naam": "Kornwerderzand IJsselmeer vaargeul",
    "lat": 53.0487,
    "lon": 5.3448,
-   "temp": 10.4,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "temp": 10.6,
+   "temp_ts": "2026-10-27T10:50:00.000+01:00"
   },
   {
    "code": "markermeer.midden",
    "naam": "Markermeer, midden",
    "lat": 52.5317,
    "lon": 5.2312,
-   "wind_ms": 10.03,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 192.4
+   "wind_ms": 9.08,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 194.5
   },
   {
    "code": "rotterdamsehoek.ijsselmeer",
    "naam": "Rotterdamsehoek IJsselmeer",
    "lat": 52.7487,
    "lon": 5.552,
-   "wind_ms": 9.36,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 176.8,
-   "temp": 10.6,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "wind_ms": 8.55,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 177.5,
+   "temp": 10.7,
+   "temp_ts": "2026-10-27T11:00:00.000+01:00"
   },
   {
    "code": "stellendam.haringvlietsluizen.schuif1",
    "naam": "Stellendam, Haringvlietsluizen",
    "lat": 51.8362,
    "lon": 4.0544,
-   "wind_ms": 6.3,
-   "wind_ts": "2026-10-27T05:20:00.000+01:00",
-   "dir": 182
+   "wind_ms": 9.3,
+   "wind_ts": "2026-10-27T11:00:00.000+01:00",
+   "dir": 203
   },
   {
    "code": "vlissingen",
    "naam": "Vlissingen",
    "lat": 51.442,
    "lon": 3.6,
-   "wind_ms": 9.61,
-   "wind_ts": "2026-10-27T05:10:00.000+01:00",
-   "dir": 184.7,
-   "temp": 13.5,
-   "temp_ts": "2026-10-27T05:20:00.000+01:00"
+   "wind_ms": 11.65,
+   "wind_ts": "2026-10-27T10:50:00.000+01:00",
+   "dir": 196.9,
+   "temp": 13.7,
+   "temp_ts": "2026-10-27T11:00:00.000+01:00"
   }
  ]
 }
