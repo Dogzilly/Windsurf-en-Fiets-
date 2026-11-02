@@ -23,15 +23,37 @@ export function pickLatest(json, now = Date.now(), maxAgeH = MAX_AGE_H) {
   return fresh[0];
 }
 
-/** Haal alle stations op via `url` (ddapi20 zelf, of een CORS-proxy met hetzelfde POST-contract). */
-export async function fetchAllStations(url, fetchImpl = fetch) {
+/** Haal alle stations op via `url` (ddapi20 zelf, of een CORS-proxy met hetzelfde POST-contract).
+ *  Robuust: max. `concurrency` verzoeken tegelijk, time-out per verzoek, en bij een fout (netwerk,
+ *  HTTP 429/5xx, lege of kapotte JSON) tot `retries` keer opnieuw met oplopende wachttijd.
+ *  `errors` telt de mislukte verzoeken (voor logging in de Action). */
+export async function fetchAllStations(url, fetchImpl = fetch, { concurrency = 4, retries = 3, timeoutMs = 15000, backoffMs = 2000, errors = null } = {}) {
+  let active = 0; const queue = [];
+  const slot = () => new Promise(res => { if (active < concurrency) { active++; res(); } else queue.push(res); });
+  const release = () => { const next = queue.shift(); if (next) next(); else active--; };
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
   const last = async (code, key) => {
-    try {
-      const r = await fetchImpl(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(rwsBody(code, key)) });
-      if (!r.ok) return null;
-      const txt = await r.text(); if (!txt) return null;
-      return pickLatest(JSON.parse(txt));
-    } catch { return null; }
+    for (let poging = 0; poging <= retries; poging++) {
+      if (poging) await sleep(backoffMs * poging);
+      await slot();
+      let reden;
+      try {
+        const ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+        const t = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+        try {
+          const r = await fetchImpl(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(rwsBody(code, key)), signal: ctrl?.signal });
+          if (r.ok) {
+            const txt = await r.text();
+            if (txt) { const j = JSON.parse(txt); if (j?.Succesvol === false && !j?.WaarnemingenLijst) return null; return pickLatest(j); }
+            reden = "leeg antwoord";
+          } else if (r.status === 429 || r.status >= 500) reden = `HTTP ${r.status}`;
+          else return null; // 4xx (bijv. geen data voor deze locatie): niet opnieuw proberen
+        } finally { if (t) clearTimeout(t); }
+      } catch (e) { reden = e?.name === "AbortError" ? "time-out" : (e?.cause?.code || e?.message || String(e)); }
+      finally { release(); }
+      if (errors) errors.push(`${code}/${key} poging ${poging + 1}: ${reden}`);
+    }
+    return null;
   };
   const stations = [];
   await Promise.all(RWS_STATIONS.map(async s => {
