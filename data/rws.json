@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02T23:12:04.650Z",
+ "generated": "2026-11-03T03:59:35.667Z",
  "source": "Rijkswaterstaat ddapi20 OphalenLaatsteWaarnemingen",
  "stations": [
   {
@@ -7,118 +7,118 @@
    "naam": "Andijk",
    "lat": 52.7503,
    "lon": 5.265,
-   "temp": 10.8,
-   "temp_ts": "2026-11-03T00:00:00.000+01:00"
+   "temp": 10.7,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "haringvliet.3",
    "naam": "Haringvliet, Kier3",
    "lat": 51.826,
    "lon": 4.0512,
-   "temp": 11.9,
-   "temp_ts": "2026-11-02T23:50:00.000+01:00"
+   "temp": 11.8,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "hoekvanholland",
    "naam": "Hoek van Holland",
    "lat": 51.9769,
    "lon": 4.1198,
-   "wind_ms": 7.38,
-   "wind_ts": "2026-11-02T23:40:00.000+01:00",
-   "dir": 45.4,
-   "temp": 13.7,
-   "temp_ts": "2026-11-02T23:50:00.000+01:00"
+   "wind_ms": 9.57,
+   "wind_ts": "2026-11-03T04:30:00.000+01:00",
+   "dir": 48.5,
+   "temp": 12.8,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "ijgeul.1",
    "naam": "IJGeul 1",
    "lat": 52.4639,
    "lon": 4.5176,
-   "wind_ms": 8.85,
-   "wind_ts": "2026-11-02T23:50:00.000+01:00",
-   "dir": 44.3
+   "wind_ms": 7.31,
+   "wind_ts": "2026-11-03T04:40:00.000+01:00",
+   "dir": 63.7
   },
   {
    "code": "ijmuiden.buitenhaven",
    "naam": "IJmuiden, buitenhaven",
    "lat": 52.463,
    "lon": 4.555,
-   "temp": 13.7,
-   "temp_ts": "2026-11-03T00:00:00.000+01:00"
+   "temp": 13.4,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "ijmuiden.havenhoofd.zuid",
    "naam": "IJmuiden, havenhoofd zuid",
    "lat": 52.4637,
    "lon": 4.5323,
-   "wind_ms": 6.26,
-   "wind_ts": "2026-11-02T23:50:00.000+01:00",
-   "dir": 34.5
+   "wind_ms": 6.97,
+   "wind_ts": "2026-11-03T04:40:00.000+01:00",
+   "dir": 54.5
   },
   {
    "code": "kamperland.schotsman",
    "naam": "Kamperland, Schotsman",
    "lat": 51.5816,
    "lon": 3.6433,
-   "temp": 11.8,
-   "temp_ts": "2026-11-02T23:50:00.000+01:00"
+   "temp": 11.7,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "kats.zandkreeksluis.buiten",
    "naam": "Kats Zandkreeksluis buiten",
    "lat": 51.544,
    "lon": 3.8592,
-   "wind_ms": 1.22,
-   "wind_ts": "2026-11-02T23:50:00.000+01:00",
-   "dir": 38.4
+   "wind_ms": 1.18,
+   "wind_ts": "2026-11-03T04:40:00.000+01:00",
+   "dir": 37.6
   },
   {
    "code": "kornwerderzand.ijsselmeer.vaargeul",
    "naam": "Kornwerderzand IJsselmeer vaargeul",
    "lat": 53.0487,
    "lon": 5.3448,
-   "temp": 10.9,
-   "temp_ts": "2026-11-03T00:00:00.000+01:00"
+   "temp": 10.8,
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   },
   {
    "code": "markermeer.midden",
    "naam": "Markermeer, midden",
    "lat": 52.5317,
    "lon": 5.2312,
-   "wind_ms": 6.39,
-   "wind_ts": "2026-11-03T00:00:00.000+01:00",
-   "dir": 39.1
+   "wind_ms": 8.64,
+   "wind_ts": "2026-11-03T04:30:00.000+01:00",
+   "dir": 54.5
   },
   {
    "code": "rotterdamsehoek.ijsselmeer",
    "naam": "Rotterdamsehoek IJsselmeer",
    "lat": 52.7487,
    "lon": 5.552,
-   "wind_ms": 9.44,
-   "wind_ts": "2026-11-03T00:00:00.000+01:00",
-   "dir": 23.1,
-   "temp": 10.9,
-   "temp_ts": "2026-11-02T23:50:00.000+01:00"
+   "wind_ms": 5.91,
+   "wind_ts": "2026-11-03T04:40:00.000+01:00",
+   "dir": 52.6,
+   "temp": 10.8,
+   "temp_ts": "2026-11-03T04:30:00.000+01:00"
   },
   {
    "code": "stellendam.haringvlietsluizen.schuif1",
    "naam": "Stellendam, Haringvlietsluizen",
    "lat": 51.8362,
    "lon": 4.0544,
-   "wind_ms": 6.2,
-   "wind_ts": "2026-11-02T23:50:00.000+01:00",
-   "dir": 52
+   "wind_ms": 5.8,
+   "wind_ts": "2026-11-03T04:40:00.000+01:00",
+   "dir": 53
   },
   {
    "code": "vlissingen",
    "naam": "Vlissingen",
    "lat": 51.442,
    "lon": 3.6,
-   "wind_ms": 5.01,
-   "wind_ts": "2026-11-02T23:40:00.000+01:00",
-   "dir": 35.9,
+   "wind_ms": 5.11,
+   "wind_ts": "2026-11-03T04:30:00.000+01:00",
+   "dir": 29.3,
    "temp": 13,
-   "temp_ts": "2026-11-02T23:50:00.000+01:00"
+   "temp_ts": "2026-11-03T04:40:00.000+01:00"
   }
  ]
 }
