@@ -250,7 +250,7 @@ function App(){
       :view==="home"?<Home alerts={alerts} perfect={perfect} sData={sData} favs={favs} oSpot={oSpot} oSpotDay={oSpotDay} sSort={sSort} bikeData={bikeData} route={route} isDesk={isDesk} go={go} {...common}/>
       :view==="spots"?<Spots spots={fReg==="Alle"?SP:SP.filter(s=>s.type===fReg)} favs={favs} tFav={tFav} oSpot={oSpot} fReg={fReg} setFReg={setFReg} regs={["Veerse Meer","Noordzee","IJsselmeer","Alle"]} sData={sData} rws={rws}/>
       :view==="alerts"?<Alerts alerts={alerts} perfect={perfect} oSpot={oSpot} favDir={favDir} maxGust={maxGust} minHours={minHours}/>
-      :view==="windwidgets"?<WindForecasts/>
+      :view==="windwidgets"?null
       :view==="markt"?<Markt/>
       :view==="video"?<YouTubeBlock/>
       :view==="meer"?<Meer go={go}/>
@@ -259,6 +259,7 @@ function App(){
       :view==="game"?<WindsurfGame/>
       :view==="detail"&&selSpot?<Detail key={selSpot.id} spot={selSpot} data={sData[selSpot.id]} selDay={selDay} setSelDay={setSelDay} {...common}/>
       :null}
+      <div hidden={view!=="windwidgets"}><WindForecasts active={view==="windwidgets"}/></div>
     </main>
 
     {!isDesk&&view!=="detail"&&<nav aria-label="Hoofdmenu" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:`linear-gradient(to top,${t.navBg} 60%,${t.navF} 100%)`,backdropFilter:"blur(20px)",borderTop:`1px solid ${t.navB}`,padding:"8px 0 calc(12px + env(safe-area-inset-bottom))",zIndex:50}}>
@@ -275,7 +276,7 @@ function App(){
   </TC.Provider>);
 }
 
-function Meer({go}){const t=useT();const items=[{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru",d:"Brouwersdam · verwachting in de app"},{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
+function Meer({go}){const t=useT();const items=[{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru",d:"Oranjeplaat · Veerse Meer"},{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
   return(<div style={{marginTop:12,display:"flex",flexDirection:"column",gap:8}}>{items.map(i=><button key={i.id} onClick={()=>go(i.id)} style={{display:"flex",alignItems:"center",gap:14,background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"16px",cursor:"pointer",fontFamily:"inherit",color:t.text,textAlign:"left"}}><span style={{fontSize:26}}>{i.icon}</span><div style={{flex:1}}><div style={{fontSize:16,fontWeight:700}}>{i.l}</div><div style={{fontSize:13,color:t.tm}}>{i.d}</div></div><span style={{color:t.tf}}>→</span></button>)}</div>);}
 
 // Bron-badge: LIVE (RWS-meting) of MODEL (Open-Meteo)
