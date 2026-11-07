@@ -1978,4 +1978,4 @@ function Em({t:text}){const t=useT();return<div className="empty-state" style={{
 createRoot(document.getElementById("root")).render(<App/>);
 
 // ── SERVICE WORKER (offline + meldingen) ──
-if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+// Serviceworker-updateflow staat vóór de app in de versiegebonden update-bootstrap.

@@ -2,8 +2,10 @@
 import { grp, computeWindows, localParts, addDays } from "./logic.js";
 
 const VERSION = __VERSION__;
-const SHELL = "wf-shell-" + VERSION;
-const RUNTIME = "wf-runtime";
+// Scopegebonden namespace: raak geen caches van andere apps op github.io aan.
+const PREFIX = "wf-windsurf-fiets-" + encodeURIComponent(new URL(self.registration.scope).pathname) + "-";
+const SHELL = PREFIX + "shell-" + VERSION;
+const RUNTIME = PREFIX + "runtime";
 const PRECACHE = __PRECACHE__;
 
 self.addEventListener("install", e => {
@@ -11,7 +13,7 @@ self.addEventListener("install", e => {
 });
 self.addEventListener("activate", e => {
   e.waitUntil((async () => {
-    for (const k of await caches.keys()) if (k.startsWith("wf-shell-") && k !== SHELL) await caches.delete(k);
+    for (const k of await caches.keys()) if (k.startsWith(PREFIX + "shell-") && k !== SHELL) await caches.delete(k);
     await self.clients.claim();
   })());
 });
@@ -23,7 +25,7 @@ async function networkFirst(req, cacheName) {
     if (r && r.ok) c.put(req, r.clone());
     return r;
   } catch (err) {
-    const hit = await c.match(req, { ignoreSearch: false }) || await caches.match(req, { ignoreSearch: true });
+    const hit = await c.match(req, { ignoreSearch: false });
     if (hit) return hit;
     throw err;
   }
@@ -35,7 +37,7 @@ async function staleWhileRevalidate(req) {
   return hit || net;
 }
 async function cacheFirst(req) {
-  const hit = await caches.match(req, { ignoreSearch: true });
+  const hit = await (await caches.open(SHELL)).match(req, { ignoreSearch: false });
   return hit || fetch(req);
 }
 
@@ -44,7 +46,7 @@ self.addEventListener("fetch", e => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (req.mode === "navigate") {
-    e.respondWith(networkFirst(req, SHELL).catch(async () => (await caches.match("index.html", { ignoreSearch: true })) || Response.error()));
+    e.respondWith(networkFirst(req, SHELL).catch(async () => (await (await caches.open(SHELL)).match("index.html", { ignoreSearch: false })) || Response.error()));
     return;
   }
   if (url.origin === self.location.origin) {

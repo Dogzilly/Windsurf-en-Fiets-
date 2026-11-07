@@ -16,9 +16,15 @@ cpSync(root + "node_modules/leaflet/LICENSE", root + "vendor/leaflet/LICENSE");
 // 2. App-bundel
 await build({
   entryPoints: [root + "src/app.jsx"], bundle: true, minify: true, format: "iife", target: ["es2020"],
-  jsx: "automatic", outfile: root + "app.js", legalComments: "none",
+  jsx: "automatic", outfile: root + "app-v" + VERSION + ".js", legalComments: "none",
   define: { "process.env.NODE_ENV": '"production"' }, logLevel: "warning",
 });
+
+// Legacy bestandsnaam behouden, maar nieuwe HTML gebruikt een uniek PAD (oude SW negeert query).
+cpSync(root + "app-v" + VERSION + ".js", root + "app.js");
+await build({ entryPoints: [root + "src/update-client.js"], bundle:true, minify:true,
+  format:"iife", target:["es2020"], outfile:root + "update-v" + VERSION + ".js",
+  define:{__APP_VERSION__:JSON.stringify(VERSION)}, logLevel:"warning" });
 
 // 3. index.html + manifest
 writeFileSync(root + "index.html", readFileSync(root + "src/index.html", "utf8").replaceAll("%VERSION%", VERSION));
@@ -36,7 +42,7 @@ writeFileSync(root + "manifest.json", JSON.stringify({
 
 // 4. Service worker met precache-lijst
 const ls = d => existsSync(root + d) ? readdirSync(root + d).map(f => d + "/" + f) : [];
-const precache = ["./", "index.html", "app.js?v=" + VERSION, "manifest.json",
+const precache = ["./", "index.html", "app-v" + VERSION + ".js", "update-v" + VERSION + ".js", "manifest.json",
   ...ls("icons").filter(f => f.endsWith(".png")), ...ls("assets").filter(f => f.endsWith(".png")),
   "vendor/leaflet/leaflet.js", "vendor/leaflet/leaflet.css", ...ls("vendor/leaflet/images"), "data/rws.json"];
 await build({
