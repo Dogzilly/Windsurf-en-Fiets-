@@ -18,3 +18,13 @@ test('exact UID-formaat, uniek bij gelijke tijd en directe officiële loader',()
  assert.equal(url.searchParams.has('idbs'),false);
  assert.throws(()=>windguruScriptUrl('<script>'));
 });
+
+test('Home heeft één widget onder weekblok en geen oude externe tab',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const app=await readFile(new URL('../src/app.jsx',import.meta.url),'utf8');
+ assert.equal((app.match(/<WindForecasts /g)||[]).length,1);
+ assert.equal((app.match(/<Home /g)||[]).length,1);
+ assert.ok(app.indexOf('Toon hele week')<app.indexOf('<WindForecasts '));
+ assert.ok(!app.includes('windwidgets'));
+ assert.ok(app.includes('<div hidden={view!=="home"||loading}>'));
+});

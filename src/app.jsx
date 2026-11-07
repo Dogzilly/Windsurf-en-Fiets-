@@ -218,10 +218,10 @@ function App(){
   const oSpot=s=>{setSelSpot(s);setSelDay(null);go("detail");};
   const oSpotDay=(s,day)=>{setSelSpot(s);setSelDay(day);go("detail");};
   const nPerfect=perfect.length;
-  const TITLES={home:"Dashboard",windwidgets:"Windfinder & Windguru",spots:"Alle Spots",alerts:"Alerts",markt:"Marktplaats",kaart:"🗺️ Kaart",game:"🎮 Game",settings:"Instellingen",meer:"Meer",video:"Video's"};
+  const TITLES={home:"Dashboard",spots:"Alle Spots",alerts:"Alerts",markt:"Marktplaats",kaart:"🗺️ Kaart",game:"🎮 Game",settings:"Instellingen",meer:"Meer",video:"Video's"};
   const mainTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"settings",icon:"⚙️",l:"Settings"},{id:"meer",icon:"☰",l:"Meer"}];
-  const deskTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
-  const inMeer=["markt","kaart","game","video","meer","windwidgets"].includes(view);
+  const deskTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
+  const inMeer=["markt","kaart","game","video","meer"].includes(view);
 
   const common={rws,minW,maxW,favDir,maxGust};
   return(
@@ -247,10 +247,9 @@ function App(){
       {!online&&!loadErr&&<div role="status" style={{background:t.wb.m,color:t.ts,borderRadius:12,padding:"8px 14px",fontSize:13,marginBottom:10}}>📴 Offline — je ziet de laatst opgehaalde prognose en metingen.</div>}
       {loadErr&&<div role="alert" style={{background:t.wb.g,color:t.w.g,borderRadius:12,padding:"10px 14px",fontSize:13,marginBottom:10}}>⚠ {loadErr} — {navigator.onLine===false?"je bent offline; ":""}laatst opgeslagen gegevens worden getoond als die er zijn.</div>}
       {loading&&["home","alerts","detail"].includes(view)?<div style={{textAlign:"center",padding:"80px 20px"}}><div style={{width:48,height:48,border:`3px solid ${t.cb}`,borderTop:`3px solid ${t.acc}`,borderRadius:"50%",animation:"spin 1s linear infinite",margin:"0 auto 20px"}}/><div style={{color:t.acc,fontSize:15}}>Winddata ophalen...</div></div>
-      :view==="home"?<Home alerts={alerts} perfect={perfect} sData={sData} favs={favs} oSpot={oSpot} oSpotDay={oSpotDay} sSort={sSort} bikeData={bikeData} route={route} isDesk={isDesk} go={go} {...common}/>
+      :view==="home"?null
       :view==="spots"?<Spots spots={fReg==="Alle"?SP:SP.filter(s=>s.type===fReg)} favs={favs} tFav={tFav} oSpot={oSpot} fReg={fReg} setFReg={setFReg} regs={["Veerse Meer","Noordzee","IJsselmeer","Alle"]} sData={sData} rws={rws}/>
       :view==="alerts"?<Alerts alerts={alerts} perfect={perfect} oSpot={oSpot} favDir={favDir} maxGust={maxGust} minHours={minHours}/>
-      :view==="windwidgets"?null
       :view==="markt"?<Markt/>
       :view==="video"?<YouTubeBlock/>
       :view==="meer"?<Meer go={go}/>
@@ -259,7 +258,7 @@ function App(){
       :view==="game"?<WindsurfGame/>
       :view==="detail"&&selSpot?<Detail key={selSpot.id} spot={selSpot} data={sData[selSpot.id]} selDay={selDay} setSelDay={setSelDay} {...common}/>
       :null}
-      <div hidden={view!=="windwidgets"}><WindForecasts active={view==="windwidgets"}/></div>
+      <div hidden={view!=="home"||loading}><Home active={view==="home"&&!loading} alerts={alerts} perfect={perfect} sData={sData} favs={favs} oSpot={oSpot} oSpotDay={oSpotDay} sSort={sSort} bikeData={bikeData} route={route} isDesk={isDesk} go={go} {...common}/></div>
     </main>
 
     {!isDesk&&view!=="detail"&&<nav aria-label="Hoofdmenu" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:`linear-gradient(to top,${t.navBg} 60%,${t.navF} 100%)`,backdropFilter:"blur(20px)",borderTop:`1px solid ${t.navB}`,padding:"8px 0 calc(12px + env(safe-area-inset-bottom))",zIndex:50}}>
@@ -276,7 +275,7 @@ function App(){
   </TC.Provider>);
 }
 
-function Meer({go}){const t=useT();const items=[{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru",d:"Oranjeplaat · Veerse Meer"},{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
+function Meer({go}){const t=useT();const items=[{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
   return(<div style={{marginTop:12,display:"flex",flexDirection:"column",gap:8}}>{items.map(i=><button key={i.id} onClick={()=>go(i.id)} style={{display:"flex",alignItems:"center",gap:14,background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"16px",cursor:"pointer",fontFamily:"inherit",color:t.text,textAlign:"left"}}><span style={{fontSize:26}}>{i.icon}</span><div style={{flex:1}}><div style={{fontSize:16,fontWeight:700}}>{i.l}</div><div style={{fontSize:13,color:t.tm}}>{i.d}</div></div><span style={{color:t.tf}}>→</span></button>)}</div>);}
 
 // Bron-badge: LIVE (RWS-meting) of MODEL (Open-Meteo)
@@ -467,7 +466,7 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,maxGust,onTap,t,nowHour}){
 }
 
 // ── HOME ──
-function Home({alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,maxGust,bikeData,route,rws,isDesk,go}){
+function Home({active,alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,maxGust,bikeData,route,rws,isDesk,go}){
   const t=useT();const perf=perfect;
   const now=localParts();const today=now.date,tmrw=addDays(today,1);
   const tA=alerts.filter(a=>a.date===today),tmA=alerts.filter(a=>a.date===tmrw);
@@ -495,6 +494,8 @@ function Home({alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,m
         {dayEntries.length>nDefault&&<button onClick={()=>setExpanded(e=>({...e,[fId]:!open}))} aria-expanded={open} style={{width:"100%",padding:"9px",borderRadius:12,border:`1px dashed ${t.cb}`,background:"transparent",color:t.acc,fontFamily:"inherit",fontSize:13,fontWeight:600,cursor:"pointer"}}>{open?"▴ Minder dagen":`▾ Toon hele week (${dayEntries.length-nDefault} dagen meer)`}</button>}
       </section>);
     })}
+    <Sec t="Windfinder & Windguru" s="Oranjeplaat · Veerse Meer"/>
+    <WindForecasts active={active}/>
   </div>);
 
   const side=(<div>
@@ -531,8 +532,10 @@ function Home({alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,favDir,m
   </div>);
 
   return(<div>
-    {isDesk?<div style={{display:"grid",gridTemplateColumns:"minmax(0,1fr) 400px",gap:24,alignItems:"start"}}><div>{week}</div><div style={{position:"sticky",top:12,paddingTop:20}}>{side}</div></div>
-    :<>{side}{week}</>}
+    <div style={{display:isDesk?"grid":"flex",flexDirection:"column",gridTemplateColumns:"minmax(0,1fr) 400px",gap:isDesk?24:0,alignItems:isDesk?"start":"stretch"}}>
+      <div style={{minWidth:0,order:isDesk?1:2}}>{week}</div>
+      <div style={{minWidth:0,order:isDesk?2:1,position:isDesk?"sticky":"static",top:12,paddingTop:isDesk?20:0}}>{side}</div>
+    </div>
     <div style={isDesk?{display:"grid",gridTemplateColumns:"minmax(0,1fr) minmax(0,1fr)",gap:24}:{}}>
       <div><Sec t="Vandaag" s={fmtD(today)}/>{tA.length>0?<SCRow items={tA} oSpot={oSpot}/>:<Em t="Geen bruikbaar windvenster meer vandaag bij je favorieten"/>}</div>
       <div><Sec t="Morgen" s={fmtD(tmrw)}/>{tmA.length>0?<SCRow items={tmA} oSpot={oSpot}/>:<Em t="Geen bruikbaar windvenster morgen bij je favorieten"/>}</div>
