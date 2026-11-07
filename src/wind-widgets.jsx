@@ -26,7 +26,7 @@ function WindguruWidget() {
   }, []);
   return <>
     <p role="status" style={{fontSize:13}}>{slow ? 'Geen tabel zichtbaar? De externe widget kan geblokkeerd zijn. Gebruik dan de knoppen bovenaan.' : 'De officiële Windguru-widget wordt extern geladen. Geen tabel zichtbaar? Gebruik de knoppen bovenaan.'}</p>
-    <div ref={host} style={{width:'100%',minWidth:0,overflowX:'auto',background:'white',color:'#222',borderRadius:12}}/>
+    <div className="wind-embed" ref={host} style={{width:'100%',minWidth:0,overflowX:'auto',background:'white',color:'#222',borderRadius:12}}/>
   </>;
 }
 
@@ -34,7 +34,7 @@ export function WindForecasts({active}) {
   const [provider, setProvider] = useState('windguru');
   const [started, setStarted] = useState(false);
   useEffect(() => {if(active) setStarted(true);}, [active]);
-  return <section style={{marginTop:16,minWidth:0,lineHeight:1.6}}>
+  return <section className="external-forecast" style={{marginTop:16,minWidth:0,lineHeight:1.6}}>
     <h2 style={{fontSize:20}}>Oranjeplaat · Veerse Meer</h2>
     <p role="status">Windguru-gebruikersspot; GFS 13 km.</p>
     <div style={{display:'flex',gap:10,flexWrap:'wrap',margin:'12px 0'}}>

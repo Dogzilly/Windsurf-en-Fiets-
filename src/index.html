@@ -24,6 +24,53 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #2b6c
   .home-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* v4.2 · rustige nautische visuele laag; externe Windguru-DOM uitgesloten. */
+body{background:#e8eff1;color:#142f40;line-height:1.5}
+.nautical{--surface:#fff;--line:#dbe6ea;--ink:#142f40;--muted:#526d7c;--accent:#087e83;--soft:#e8f5f3;--shadow:0 5px 22px rgba(20,47,64,.045);font-size:15px;line-height:1.5}
+.nautical[data-theme=dark]{--surface:#142c39;--line:#294552;--ink:#e8f2f5;--muted:#a7bdc7;--accent:#63d4d3;--soft:#193d47;--shadow:none}
+.nautical .ambient-decoration{display:none}
+.nautical .app-header{padding:28px 22px 22px!important;border-bottom:1px solid var(--line);background:var(--surface);margin-bottom:8px;flex-wrap:wrap}
+.nautical .app-header h1{font-size:29px!important;font-weight:750!important;letter-spacing:-.9px!important;line-height:1.2;margin-top:8px!important}
+.nautical .app-header>div:first-child>div{letter-spacing:1.1px!important;font-size:11px!important;font-weight:700!important;flex-wrap:wrap}
+.nautical .app-main{padding-top:6px!important}
+.nautical button:not(.wind-embed *),.nautical input:not(.wind-embed *),.nautical select:not(.wind-embed *){min-height:44px;min-width:44px;touch-action:manipulation;font:inherit}
+.nautical input:not([type=range]):not(.wind-embed *){border-radius:12px!important}
+.nautical button:not(.wind-embed *){transition:background .16s ease,box-shadow .16s ease;line-height:1.35}
+.nautical button:disabled:not(.wind-embed *){opacity:.55;cursor:not-allowed}
+.nautical button:focus-visible:not(.wind-embed *),.nautical a:focus-visible:not(.wind-embed *),.nautical input:focus-visible:not(.wind-embed *){outline:3px solid var(--accent)!important;outline-offset:3px!important}
+.nautical .section-heading{margin-top:30px!important;margin-bottom:14px!important;gap:8px;flex-wrap:wrap}
+.nautical .section-heading>span:first-child{font-size:20px!important;letter-spacing:-.4px;font-weight:750!important}
+.nautical .section-heading>span:last-child:not(:first-child){font-size:12px!important;color:var(--muted)!important;letter-spacing:.1px}
+.nautical .spot-week{margin-bottom:24px!important}
+.nautical .spot-week>div:first-child{padding:4px 2px 10px;min-height:48px;flex-wrap:wrap}
+.nautical .forecast-card{background:var(--surface)!important;border-radius:20px!important;box-shadow:var(--shadow);margin-bottom:12px!important;border-width:1px!important}
+.nautical .forecast-card>div:first-child{padding:16px 16px 12px!important;background:var(--surface);gap:10px;border-bottom:1px solid var(--line);margin-bottom:10px;flex-wrap:wrap}
+.nautical .forecast-card>div:first-child>div{flex-wrap:wrap;gap:8px!important}
+.nautical .forecast-card>div:first-child>div>span:first-child{font-size:16px!important}
+.nautical .week-toggle{border:1px solid var(--line)!important;background:var(--surface)!important;color:var(--accent)!important;min-height:48px!important;padding:12px 16px!important;border-radius:14px!important;font-size:14px!important;box-shadow:var(--shadow)}
+.nautical .week-toggle:hover{background:var(--soft)!important}
+.nautical .empty-state{background:var(--surface)!important;border:1px dashed var(--line)!important;border-radius:20px!important;padding:32px 24px!important;color:var(--muted)!important;line-height:1.7}
+.nautical .app-main>div[role=alert],.nautical .app-main>div[role=status]{padding:14px 16px!important;border-radius:14px!important;line-height:1.6}
+.nautical .desktop-nav{gap:6px!important}
+.nautical .desktop-nav button[aria-current=page]{background:var(--soft)!important;color:var(--accent)!important;border-color:var(--line)!important}
+.nautical .bottom-nav{background:var(--surface)!important;border-top:1px solid var(--line)!important;box-shadow:0 -6px 24px rgba(20,47,64,.06);padding-top:8px!important}
+.nautical .bottom-nav button{min-height:56px!important;min-width:44px;border-radius:14px!important}
+.nautical .bottom-nav button[aria-current=page]{background:var(--soft)!important;color:var(--accent)!important}
+.nautical .external-forecast{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow);margin-bottom:24px}
+.nautical .external-forecast>h2{font-size:20px!important;letter-spacing:-.4px;line-height:1.3;margin-bottom:8px}
+.nautical .external-forecast>p{margin:10px 0;color:var(--muted);font-size:14px}
+.nautical .external-forecast>p[role=status]{font-size:12px;font-weight:650;color:var(--accent);margin-bottom:16px}
+.nautical .external-forecast>div:not(.wind-embed)>a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px 16px!important;border-radius:13px!important;background:var(--accent)!important;color:var(--surface)!important;font-size:14px;font-weight:650;flex:1 1 210px;text-align:center}
+.nautical .external-forecast>[role=tablist]{margin:18px 0 10px}
+.nautical .external-forecast>[role=tablist]>[role=tab]{flex:1;min-height:46px;border-radius:12px!important}
+.nautical .external-forecast>[role=tablist]>[role=tab][aria-selected=true]{background:var(--accent)!important;border-color:var(--accent)!important;color:var(--surface)!important}
+.nautical .external-forecast>[role=tablist]>[role=tab][aria-selected=false]{background:var(--soft)!important;border-color:var(--line)!important;color:var(--ink)!important}
+.nautical .external-forecast [role=tabpanel]>p{font-size:13px;line-height:1.65;margin:12px 0;color:var(--muted)}
+@media(min-width:900px){.nautical .app-header{padding:24px!important}.nautical .app-header>div:first-child{flex:0 0 220px}.nautical .desktop-nav{justify-content:flex-end!important}.nautical .app-main{padding-top:12px!important}.nautical .spots-grid{gap:16px}}
+@media(max-width:380px){.nautical .app-header{padding:22px 16px 18px!important;gap:8px}.nautical .app-header h1{font-size:26px!important}.nautical .external-forecast{padding:15px}.nautical .app-main{padding-left:12px!important;padding-right:12px!important}.nautical .bottom-nav button{padding-left:5px!important;padding-right:5px!important}.nautical .section-heading>span:first-child{font-size:18px!important}}
+@media(prefers-reduced-motion:reduce){.nautical button{transition:none!important}}
+
 </style>
 </head><body>
 <noscript>Deze app heeft JavaScript nodig.</noscript>

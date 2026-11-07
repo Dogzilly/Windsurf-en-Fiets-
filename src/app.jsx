@@ -8,8 +8,8 @@ import {RWS_STATIONS,RWS_BASE} from "./stations.js";
 import {useRws,requestNotif,notifyNew,shareSettingsWithSW,registerPeriodic,notifSupported} from "./services.js";
 
 // ── THEMES ──
-const TH={light:{bg:"linear-gradient(165deg,#f0f4f8 0%,#e8eef5 30%,#f5f7fa 60%,#edf1f7 100%)",text:"#1a2b3c",ts:"#5a7089",tm:"#6b7f94",tf:"#8a9aaa",acc:"#2b6cb0",card:"rgba(255,255,255,0.7)",cb:"rgba(0,0,0,0.08)",ch:"rgba(0,0,0,0.02)",navBg:"rgba(255,255,255,0.97)",navF:"rgba(255,255,255,0.9)",navB:"rgba(0,0,0,0.08)",navI:"#8a9aaa",btn:"rgba(0,0,0,0.05)",btnA:"rgba(43,108,176,0.1)",btnAB:"rgba(43,108,176,0.3)",div:"rgba(0,0,0,0.05)",ambA:"rgba(43,108,176,0.04)",ambB:"rgba(0,160,70,0.03)",alBg:"linear-gradient(135deg,rgba(0,160,70,0.08) 0%,rgba(43,108,176,0.05) 100%)",alBd:"rgba(0,160,70,0.2)",alIt:"rgba(0,0,0,0.03)",pRow:"rgba(0,160,70,0.06)",gGrid:"rgba(0,0,0,0.06)",gIdeal:"rgba(0,160,70,0.08)",gLine:"#2b6cb0",gGust:"rgba(220,120,0,0.35)",gText:"#8a9aaa",stOn:"#c49000",stOff:"#bcc8d4",swOn:"#0a8f4a",swOff:"rgba(0,0,0,0.12)",w:{p:"#0a8f4a",m:"#c49000",s:"#d97700",g:"#c62828",z:"#78909C"},wb:{p:"rgba(0,180,80,0.1)",m:"rgba(200,150,0,0.1)",s:"rgba(220,120,0,0.1)",g:"rgba(200,40,40,0.1)",z:"rgba(120,144,156,0.08)"},rain:"#1976D2",dry:"#2E7D32",sGreen:"rgba(0,160,70,0.08)",sGreenT:"#0a8f4a",badBg:"#0a8f4a",badT:"#fff",rBd:"#bcc8d4",rAc:"#2b6cb0",rose:"#2b6cb0",roseArc:"rgba(43,108,176,0.2)",roseSel:"rgba(0,160,70,0.25)",roseSelStroke:"#0a8f4a",meta:"#f0f4f8"},
-dark:{bg:"linear-gradient(165deg,#0a1628 0%,#0d2137 30%,#0f2b4a 60%,#0a1f3d 100%)",text:"#e8edf4",ts:"#6a8aaa",tm:"#5a7a9a",tf:"#4a6a8a",acc:"#5b9bd5",card:"rgba(255,255,255,0.04)",cb:"rgba(255,255,255,0.06)",ch:"rgba(255,255,255,0.02)",navBg:"rgba(10,22,40,0.98)",navF:"rgba(10,22,40,0.85)",navB:"rgba(91,155,213,0.15)",navI:"#4a6a8a",btn:"rgba(255,255,255,0.04)",btnA:"rgba(91,155,213,0.15)",btnAB:"rgba(91,155,213,0.4)",div:"rgba(255,255,255,0.04)",ambA:"rgba(0,150,255,0.08)",ambB:"rgba(0,230,118,0.05)",alBg:"linear-gradient(135deg,rgba(0,230,118,0.12) 0%,rgba(0,150,255,0.08) 100%)",alBd:"rgba(0,230,118,0.25)",alIt:"rgba(0,0,0,0.2)",pRow:"rgba(0,230,118,0.04)",gGrid:"rgba(255,255,255,0.06)",gIdeal:"rgba(0,230,118,0.06)",gLine:"#5b9bd5",gGust:"rgba(255,152,0,0.3)",gText:"#4a6a8a",stOn:"#FFC107",stOff:"#3a5a7a",swOn:"#00E676",swOff:"rgba(255,255,255,0.1)",w:{p:"#00E676",m:"#FFC107",s:"#FF9800",g:"#F44336",z:"#78909C"},wb:{p:"rgba(0,230,118,0.15)",m:"rgba(255,193,7,0.15)",s:"rgba(255,152,0,0.15)",g:"rgba(244,67,54,0.15)",z:"rgba(120,144,156,0.1)"},rain:"#64B5F6",dry:"#66BB6A",sGreen:"rgba(0,230,118,0.08)",sGreenT:"#00E676",badBg:"#00E676",badT:"#0a1628",rBd:"#3a5a7a",rAc:"#5b9bd5",rose:"#5b9bd5",roseArc:"rgba(91,155,213,0.15)",roseSel:"rgba(0,230,118,0.2)",roseSelStroke:"#00E676",meta:"#0a1628"}};
+const TH={light:{bg:"#f2f6f7",text:"#142f40",ts:"#496675",tm:"#526d7c",tf:"#617885",acc:"#087e83",card:"#ffffff",cb:"rgba(0,0,0,0.08)",ch:"rgba(0,0,0,0.02)",navBg:"rgba(255,255,255,0.97)",navF:"rgba(255,255,255,0.9)",navB:"rgba(0,0,0,0.08)",navI:"#617885",btn:"rgba(0,0,0,0.05)",btnA:"rgba(43,108,176,0.1)",btnAB:"rgba(43,108,176,0.3)",div:"rgba(0,0,0,0.05)",ambA:"rgba(43,108,176,0.04)",ambB:"rgba(0,160,70,0.03)",alBg:"linear-gradient(135deg,rgba(0,160,70,0.08) 0%,rgba(43,108,176,0.05) 100%)",alBd:"rgba(0,160,70,0.2)",alIt:"rgba(0,0,0,0.03)",pRow:"rgba(0,160,70,0.06)",gGrid:"rgba(0,0,0,0.06)",gIdeal:"rgba(0,160,70,0.08)",gLine:"#087e83",gGust:"rgba(220,120,0,0.35)",gText:"#617885",stOn:"#c49000",stOff:"#bcc8d4",swOn:"#0a8f4a",swOff:"rgba(0,0,0,0.12)",w:{p:"#0a8f4a",m:"#c49000",s:"#d97700",g:"#c62828",z:"#78909C"},wb:{p:"rgba(0,180,80,0.1)",m:"rgba(200,150,0,0.1)",s:"rgba(220,120,0,0.1)",g:"rgba(200,40,40,0.1)",z:"rgba(120,144,156,0.08)"},rain:"#1976D2",dry:"#2E7D32",sGreen:"rgba(0,160,70,0.08)",sGreenT:"#0a8f4a",badBg:"#0a8f4a",badT:"#fff",rBd:"#bcc8d4",rAc:"#087e83",rose:"#087e83",roseArc:"rgba(43,108,176,0.2)",roseSel:"rgba(0,160,70,0.25)",roseSelStroke:"#0a8f4a",meta:"#f0f4f8"},
+dark:{bg:"#0c1e29",text:"#e8edf4",ts:"#b2c7d0",tm:"#9eb8c5",tf:"#9eb8c5",acc:"#63d4d3",card:"#142c39",cb:"rgba(255,255,255,0.06)",ch:"rgba(255,255,255,0.02)",navBg:"rgba(10,22,40,0.98)",navF:"rgba(10,22,40,0.85)",navB:"rgba(91,155,213,0.15)",navI:"#9eb8c5",btn:"#142c39",btnA:"rgba(91,155,213,0.15)",btnAB:"rgba(91,155,213,0.4)",div:"#142c39",ambA:"rgba(0,150,255,0.08)",ambB:"rgba(0,230,118,0.05)",alBg:"linear-gradient(135deg,rgba(0,230,118,0.12) 0%,rgba(0,150,255,0.08) 100%)",alBd:"rgba(0,230,118,0.25)",alIt:"rgba(0,0,0,0.2)",pRow:"rgba(0,230,118,0.04)",gGrid:"rgba(255,255,255,0.06)",gIdeal:"rgba(0,230,118,0.06)",gLine:"#63d4d3",gGust:"rgba(255,152,0,0.3)",gText:"#9eb8c5",stOn:"#FFC107",stOff:"#3a5a7a",swOn:"#00E676",swOff:"rgba(255,255,255,0.1)",w:{p:"#00E676",m:"#FFC107",s:"#FF9800",g:"#F44336",z:"#78909C"},wb:{p:"rgba(0,230,118,0.15)",m:"rgba(255,193,7,0.15)",s:"rgba(255,152,0,0.15)",g:"rgba(244,67,54,0.15)",z:"rgba(120,144,156,0.1)"},rain:"#64B5F6",dry:"#66BB6A",sGreen:"rgba(0,230,118,0.08)",sGreenT:"#00E676",badBg:"#00E676",badT:"#0a1628",rBd:"#3a5a7a",rAc:"#63d4d3",rose:"#63d4d3",roseArc:"rgba(91,155,213,0.15)",roseSel:"rgba(0,230,118,0.2)",roseSelStroke:"#00E676",meta:"#0a1628"}};
 const TC=createContext(TH.light);const useT=()=>useContext(TC);
 // Windklasse volgt de ingestelde range (RANGE wordt elke render door App gezet)
 const RANGE={min:15,max:25};
@@ -226,15 +226,15 @@ function App(){
   const common={rws,minW,maxW,favDir,maxGust};
   return(
   <TC.Provider value={t}>
-  <div className="app" style={{minHeight:"100vh",background:t.bg,fontFamily:"'Outfit','SF Pro Display',sans-serif",color:t.text,maxWidth:isDesk?1200:430,margin:"0 auto",position:"relative",transition:"background 0.3s"}}>
+  <div className="app nautical" data-theme={dark?"dark":"light"} style={{minHeight:"100vh",background:t.bg,fontFamily:"'Outfit','SF Pro Display',sans-serif",color:t.text,maxWidth:isDesk?1200:520,margin:"0 auto",position:"relative",transition:"background 0.3s"}}>
     <style>{`@keyframes spin{to{transform:rotate(360deg)}} @keyframes wsLivePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}} input[type=range]{accent-color:${t.acc}} .sc-row-scroll::-webkit-scrollbar{display:none} button:focus-visible,a:focus-visible{outline:2px solid ${t.acc};outline-offset:2px}`}</style>
-    <div aria-hidden="true" style={{position:"fixed",top:-100,right:-100,width:350,height:350,background:`radial-gradient(circle,${t.ambA} 0%,transparent 70%)`,borderRadius:"50%",pointerEvents:"none"}}/>
-    <div aria-hidden="true" style={{position:"fixed",bottom:-50,left:-80,width:300,height:300,background:`radial-gradient(circle,${t.ambB} 0%,transparent 70%)`,borderRadius:"50%",pointerEvents:"none"}}/>
+    <div className="ambient-decoration" aria-hidden="true" style={{position:"fixed",top:-100,right:-100,width:350,height:350,background:`radial-gradient(circle,${t.ambA} 0%,transparent 70%)`,borderRadius:"50%",pointerEvents:"none"}}/>
+    <div className="ambient-decoration" aria-hidden="true" style={{position:"fixed",bottom:-50,left:-80,width:300,height:300,background:`radial-gradient(circle,${t.ambB} 0%,transparent 70%)`,borderRadius:"50%",pointerEvents:"none"}}/>
 
-    <header style={{padding:"16px 20px 8px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,position:"relative"}}>
+    <header className="app-header" style={{padding:"16px 20px 8px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,position:"relative"}}>
       {view==="detail"?<button onClick={()=>go("home")} style={{background:t.btn,border:"none",color:t.text,borderRadius:12,padding:"8px 14px",fontSize:15,cursor:"pointer",fontFamily:"inherit"}}>← Terug</button>
       :<div><div style={{fontSize:12,fontWeight:500,color:t.acc,letterSpacing:2.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:6}}>Windsurf en Fiets<span style={{fontSize:10,fontWeight:700,background:`${t.acc}22`,color:t.acc,borderRadius:6,padding:"1px 6px",letterSpacing:0.5}}>v{VERSION}</span></div><h1 style={{fontSize:24,fontWeight:800,letterSpacing:-0.5,marginTop:2,margin:0}}>{TITLES[view]||""}</h1></div>}
-      {isDesk&&view!=="detail"&&<nav aria-label="Hoofdmenu" style={{display:"flex",gap:4,flexWrap:"wrap",justifyContent:"center",flex:1}}>
+      {isDesk&&view!=="detail"&&<nav className="desktop-nav" aria-label="Hoofdmenu" style={{display:"flex",gap:4,flexWrap:"wrap",justifyContent:"center",flex:1}}>
         {deskTabs.map(tb=><button key={tb.id} onClick={()=>go(tb.id)} aria-current={view===tb.id?"page":undefined} style={{background:view===tb.id?t.btnA:"transparent",border:`1px solid ${view===tb.id?t.btnAB:"transparent"}`,color:view===tb.id?t.acc:t.ts,borderRadius:12,padding:"8px 12px",cursor:"pointer",fontFamily:"inherit",fontSize:14,fontWeight:600,position:"relative"}}>{tb.icon} {tb.l}{tb.badge>0&&<span style={{marginLeft:6,background:t.badBg,color:t.badT,fontSize:10,fontWeight:800,borderRadius:10,padding:"1px 6px"}}>{tb.badge}</span>}</button>)}
       </nav>}
       <div style={{display:"flex",alignItems:"center",gap:10}}>
@@ -243,7 +243,7 @@ function App(){
       </div>
     </header>
 
-    <main style={{padding:isDesk?"0 24px 40px":"0 16px 100px"}}>
+    <main className="app-main" style={{padding:isDesk?"0 24px 40px":"0 16px 100px"}}>
       {!online&&!loadErr&&<div role="status" style={{background:t.wb.m,color:t.ts,borderRadius:12,padding:"8px 14px",fontSize:13,marginBottom:10}}>📴 Offline — je ziet de laatst opgehaalde prognose en metingen.</div>}
       {loadErr&&<div role="alert" style={{background:t.wb.g,color:t.w.g,borderRadius:12,padding:"10px 14px",fontSize:13,marginBottom:10}}>⚠ {loadErr} — {navigator.onLine===false?"je bent offline; ":""}laatst opgeslagen gegevens worden getoond als die er zijn.</div>}
       {loading&&["home","alerts","detail"].includes(view)?<div style={{textAlign:"center",padding:"80px 20px"}}><div style={{width:48,height:48,border:`3px solid ${t.cb}`,borderTop:`3px solid ${t.acc}`,borderRadius:"50%",animation:"spin 1s linear infinite",margin:"0 auto 20px"}}/><div style={{color:t.acc,fontSize:15}}>Winddata ophalen...</div></div>
@@ -261,7 +261,7 @@ function App(){
       <div hidden={view!=="home"||loading}><Home active={view==="home"&&!loading} alerts={alerts} perfect={perfect} sData={sData} favs={favs} oSpot={oSpot} oSpotDay={oSpotDay} sSort={sSort} bikeData={bikeData} route={route} isDesk={isDesk} go={go} {...common}/></div>
     </main>
 
-    {!isDesk&&view!=="detail"&&<nav aria-label="Hoofdmenu" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:`linear-gradient(to top,${t.navBg} 60%,${t.navF} 100%)`,backdropFilter:"blur(20px)",borderTop:`1px solid ${t.navB}`,padding:"8px 0 calc(12px + env(safe-area-inset-bottom))",zIndex:50}}>
+    {!isDesk&&view!=="detail"&&<nav className="bottom-nav" aria-label="Hoofdmenu" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:520,background:`linear-gradient(to top,${t.navBg} 60%,${t.navF} 100%)`,backdropFilter:"blur(20px)",borderTop:`1px solid ${t.navB}`,padding:"8px 0 calc(12px + env(safe-area-inset-bottom))",zIndex:50}}>
       <div style={{display:"flex",justifyContent:"space-around"}}>
       {mainTabs.map(tb=>{const act=view===tb.id||(tb.id==="meer"&&inMeer);return(
         <button key={tb.id} onClick={()=>go(tb.id)} aria-current={act?"page":undefined} style={{background:"none",border:"none",color:act?t.acc:t.navI,display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",fontSize:22,padding:"4px 6px",position:"relative",flex:1,minWidth:0}}>
@@ -357,7 +357,7 @@ function DayWindCard({spot,date,hrs,minW,maxW,favDir,maxGust,onTap,t,nowHour}){
   const yGridVals=Array.from({length:Math.floor(chartMax/10)+1},(_,i)=>i*10);
 
   return(
-    <div onClick={onTap} style={{background:t.card,border:`1px solid ${hasGood?q.color+"55":t.cb}`,borderRadius:16,marginBottom:10,cursor:"pointer",overflow:"hidden"}}>
+    <div className="forecast-card" onClick={onTap} style={{background:t.card,border:`1px solid ${hasGood?q.color+"55":t.cb}`,borderRadius:16,marginBottom:10,cursor:"pointer",overflow:"hidden"}}>
       {/* Header - vast, niet scrollend */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 14px 8px"}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
@@ -479,7 +479,7 @@ function Home({active,alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,f
     {sorted.length===0&&<Em t="Nog geen favoriete spots — kies ze bij Spots (☆)."/>}
     {sorted.map(fId=>{const spot=SP.find(s=>s.id===fId);if(!spot||!sData[fId])return null;const days=grp(sData[fId].hourly);const dayEntries=Object.entries(days).filter(([d])=>d>=today).slice(0,7);
       const ws=rws?nearSt(spot,rws,"wind"):null;const open=!!expanded[fId];const shown=open?dayEntries:dayEntries.slice(0,nDefault);
-      return(<section key={fId} style={{marginBottom:16}} aria-label={spot.name}>
+      return(<section className="spot-week" key={fId} style={{marginBottom:16}} aria-label={spot.name}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8,cursor:"pointer",gap:8}} onClick={()=>oSpot(spot)}>
           <div style={{minWidth:0}}><span style={{fontSize:17,fontWeight:700}}>{spot.name}</span><span style={{fontSize:13,color:t.acc,marginLeft:8}}>{spot.type}</span></div>
           <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
@@ -491,7 +491,7 @@ function Home({active,alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,f
         {shown.map(([d,h])=>(
           <DayWindCard key={d} spot={spot} date={d} hrs={h} minW={minW} maxW={maxW} favDir={favDir} maxGust={maxGust} onTap={()=>oSpotDay(spot,d)} t={t} nowHour={d===today?now.hour:null}/>
         ))}
-        {dayEntries.length>nDefault&&<button onClick={()=>setExpanded(e=>({...e,[fId]:!open}))} aria-expanded={open} style={{width:"100%",padding:"9px",borderRadius:12,border:`1px dashed ${t.cb}`,background:"transparent",color:t.acc,fontFamily:"inherit",fontSize:13,fontWeight:600,cursor:"pointer"}}>{open?"▴ Minder dagen":`▾ Toon hele week (${dayEntries.length-nDefault} dagen meer)`}</button>}
+        {dayEntries.length>nDefault&&<button className="week-toggle" onClick={()=>setExpanded(e=>({...e,[fId]:!open}))} aria-expanded={open} style={{width:"100%",padding:"9px",borderRadius:12,border:`1px dashed ${t.cb}`,background:"transparent",color:t.acc,fontFamily:"inherit",fontSize:13,fontWeight:600,cursor:"pointer"}}>{open?"▴ Minder dagen":`▾ Toon hele week (${dayEntries.length-nDefault} dagen meer)`}</button>}
       </section>);
     })}
     <Sec t="Windfinder & Windguru" s="Oranjeplaat · Veerse Meer"/>
@@ -1924,7 +1924,7 @@ function Settings({minW,setMinW,maxW,setMaxW,alertsOn,setAlertsOn,sSort,setSSort
 }
 
 // ── SHARED ──
-function Sec({t:title,s:sub}){const t=useT();return(<div style={{marginTop:20,marginBottom:10,display:"flex",justifyContent:"space-between",alignItems:"baseline"}}><span style={{fontSize:17,fontWeight:700}}>{title}</span>{sub&&<span style={{fontSize:13,color:t.acc}}>{sub}</span>}</div>);}
+function Sec({t:title,s:sub}){const t=useT();return(<div className="section-heading" style={{marginTop:20,marginBottom:10,display:"flex",justifyContent:"space-between",alignItems:"baseline"}}><span style={{fontSize:17,fontWeight:700}}>{title}</span>{sub&&<span style={{fontSize:13,color:t.acc}}>{sub}</span>}</div>);}
 
 function SC({a,tap}){const t=useT();const q=wc(a.avgWind,t);return(
   <div onClick={tap} style={{flexShrink:0,width:"calc(85vw - 32px)",maxWidth:340,background:q.bg,border:`1px solid ${q.color}33`,borderRadius:18,padding:"18px",cursor:"pointer",scrollSnapAlign:"start",display:"flex",flexDirection:"column",gap:12}}>
@@ -1973,7 +1973,7 @@ function SCRow({items,oSpot}){
   );
 }
 
-function Em({t:text}){const t=useT();return<div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:14,padding:"24px 16px",textAlign:"center",color:t.tf,fontSize:15,marginBottom:8}}>{text}</div>;}
+function Em({t:text}){const t=useT();return<div className="empty-state" style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:14,padding:"24px 16px",textAlign:"center",color:t.tf,fontSize:15,marginBottom:8}}>{text}</div>;}
 
 createRoot(document.getElementById("root")).render(<App/>);
 

@@ -28,3 +28,14 @@ test('Home heeft één widget onder weekblok en geen oude externe tab',async()=>
  assert.ok(!app.includes('windwidgets'));
  assert.ok(app.includes('<div hidden={view!=="home"||loading}>'));
 });
+
+test('visuele laag houdt widget geïsoleerd en telefoonknoppen minimaal 44px',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const html=await readFile(new URL('../src/index.html',import.meta.url),'utf8');
+ const app=await readFile(new URL('../src/app.jsx',import.meta.url),'utf8');
+ assert.ok(html.includes('min-height:44px;min-width:44px'));
+ assert.ok(html.includes(':not(.wind-embed *)'));
+ assert.ok(html.includes('@media(max-width:380px)'));
+ assert.ok(app.includes('className="forecast-card"'));
+ assert.ok(app.includes('data-theme={dark?"dark":"light"}'));
+});
