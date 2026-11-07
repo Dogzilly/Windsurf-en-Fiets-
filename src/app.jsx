@@ -1,6 +1,7 @@
 
 import React,{useState,useEffect,createContext,useContext,useRef,useCallback,useMemo} from "react";
 import {createRoot} from "react-dom/client";
+import {WindForecasts} from "./wind-widgets.jsx";
 import {VERSION} from "./version.js";
 import {circMean,dirInRange,hourOk,windClass,CLASS_LABEL,grp,pk,localParts,addDays,computeWindows,haversine,bearing,headwind,nearestStation,bikeIdx} from "./logic.js";
 import {RWS_STATIONS,RWS_BASE} from "./stations.js";
@@ -217,10 +218,10 @@ function App(){
   const oSpot=s=>{setSelSpot(s);setSelDay(null);go("detail");};
   const oSpotDay=(s,day)=>{setSelSpot(s);setSelDay(day);go("detail");};
   const nPerfect=perfect.length;
-  const TITLES={home:"Dashboard",spots:"Alle Spots",alerts:"Alerts",markt:"Marktplaats",kaart:"🗺️ Kaart",game:"🎮 Game",settings:"Instellingen",meer:"Meer",video:"Video's"};
+  const TITLES={home:"Dashboard",windwidgets:"Windfinder & Windguru",spots:"Alle Spots",alerts:"Alerts",markt:"Marktplaats",kaart:"🗺️ Kaart",game:"🎮 Game",settings:"Instellingen",meer:"Meer",video:"Video's"};
   const mainTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"settings",icon:"⚙️",l:"Settings"},{id:"meer",icon:"☰",l:"Meer"}];
-  const deskTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
-  const inMeer=["markt","kaart","game","video","meer"].includes(view);
+  const deskTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
+  const inMeer=["markt","kaart","game","video","meer","windwidgets"].includes(view);
 
   const common={rws,minW,maxW,favDir,maxGust};
   return(
@@ -249,6 +250,7 @@ function App(){
       :view==="home"?<Home alerts={alerts} perfect={perfect} sData={sData} favs={favs} oSpot={oSpot} oSpotDay={oSpotDay} sSort={sSort} bikeData={bikeData} route={route} isDesk={isDesk} go={go} {...common}/>
       :view==="spots"?<Spots spots={fReg==="Alle"?SP:SP.filter(s=>s.type===fReg)} favs={favs} tFav={tFav} oSpot={oSpot} fReg={fReg} setFReg={setFReg} regs={["Veerse Meer","Noordzee","IJsselmeer","Alle"]} sData={sData} rws={rws}/>
       :view==="alerts"?<Alerts alerts={alerts} perfect={perfect} oSpot={oSpot} favDir={favDir} maxGust={maxGust} minHours={minHours}/>
+      :view==="windwidgets"?<WindForecasts/>
       :view==="markt"?<Markt/>
       :view==="video"?<YouTubeBlock/>
       :view==="meer"?<Meer go={go}/>
@@ -273,7 +275,7 @@ function App(){
   </TC.Provider>);
 }
 
-function Meer({go}){const t=useT();const items=[{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
+function Meer({go}){const t=useT();const items=[{id:"windwidgets",icon:"🌬️",l:"Windfinder & Windguru",d:"Brouwersdam · verwachting in de app"},{id:"kaart",icon:"🗺️",l:"Kaart Veerse Meer",d:"Satelliet, zeekaart en route"},{id:"markt",icon:"🛒",l:"Marktplaats",d:"Tweedehands surfspullen zoeken"},{id:"video",icon:"▶️",l:"Video's",d:"YouTube windsurf-zoekopdrachten"},{id:"game",icon:"🎮",l:"Game",d:"Johanski Jump Sessie"}];
   return(<div style={{marginTop:12,display:"flex",flexDirection:"column",gap:8}}>{items.map(i=><button key={i.id} onClick={()=>go(i.id)} style={{display:"flex",alignItems:"center",gap:14,background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"16px",cursor:"pointer",fontFamily:"inherit",color:t.text,textAlign:"left"}}><span style={{fontSize:26}}>{i.icon}</span><div style={{flex:1}}><div style={{fontSize:16,fontWeight:700}}>{i.l}</div><div style={{fontSize:13,color:t.tm}}>{i.d}</div></div><span style={{color:t.tf}}>→</span></button>)}</div>);}
 
 // Bron-badge: LIVE (RWS-meting) of MODEL (Open-Meteo)
