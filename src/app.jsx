@@ -501,6 +501,7 @@ function Home({active,alerts,perfect,sData,favs,oSpot,oSpotDay,minW,maxW,sSort,f
   </div>);
 
   const side=(<div>
+    <LiveBlock spot={{name:"Oranjeplaat",lat:51.5145,lon:3.7037}} rws={rws} minW={minW} maxW={maxW} windOnly/>
     <WaterTempBanner rws={rws}/>
     <a href="https://metar-taf.com/nl/metar/EHMZ" target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",display:"block",marginBottom:12}}>
       <div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"14px 16px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
@@ -1707,20 +1708,20 @@ function Alerts({alerts,perfect,oSpot,favDir,maxGust,minHours}){const t=useT();c
 
 // ── DETAIL ──
 // ── RWS LIVE BLOCK: dichtstbijzijnde verse RWS-meting ──
-function LiveBlock({spot,rws,minW,maxW}){
+function LiveBlock({spot,rws,minW,maxW,windOnly=false}){
   const t=useT();
   const [now,setNow]=useState(Date.now);
   useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(timer)},[]);
   const found=rws?nearSt(spot,rws,"wind",{now}):null;
   const ws=validWindStatus(found,now)?found:null;
-  const ts=rws?nearSt(spot,rws,"temp",{now}):null;
+  const ts=!windOnly&&rws?nearSt(spot,rws,"temp",{now}):null;
   if(!ws&&!ts)return<Em t="Geen verse RWS-meting binnen 40 km — zie Prognose (model)."/>;
   const kn=ws?ms2kn(ws.wind_ms):null;const q=kn!=null?wc(kn,t):null;
   const ageMin=ws?Math.round((now-new Date(ws.wind_ts))/60000):null;
   return <div>
     {ws&&<div className="measurement-card" style={{background:t.card,border:`1px solid ${t.cb}`,color:t.text}}>
       <div className="measurement-copy">
-        <div className="measurement-title"><span className="live-status-led" aria-hidden="true"/> LIVE · Wind</div>
+        <div className="measurement-title"><span className="live-status-led" aria-hidden="true"/> LIVE · Wind{windOnly?" (RWS)":""}</div>
         <div className="measurement-meta" style={{color:t.ts}}>10-min gemiddelde · {q.label}</div>
         {ws.dir!=null&&<div className="measurement-meta" style={{color:t.ts}}>{d2d(ws.dir)} · {Math.round(ws.dir)}°</div>}
         <div className="measurement-meta" style={{color:t.ts}}>{ws.naam} · {ws.km.toFixed(1)} km · {hhmm(ws.wind_ts)} ({ageMin} min geleden)</div>
@@ -1731,9 +1732,9 @@ function LiveBlock({spot,rws,minW,maxW}){
       <div className="measurement-copy"><div className="measurement-title">🌡️ Watertemperatuur</div><div className="measurement-meta" style={{color:t.ts}}>{ts.naam} · {ts.km.toFixed(1)} km · {hhmm(ts.temp_ts)}</div></div>
       <div className="measurement-value" style={{color:t.acc}}>{ts.temp.toFixed(1)}<span>°C</span></div>
     </div>}
-    <div style={{padding:"8px 12px",background:t.ch,borderRadius:10,fontSize:11,color:t.ts,lineHeight:1.5}}>
+    {!windOnly&&<div style={{padding:"8px 12px",background:t.ch,borderRadius:10,fontSize:11,color:t.ts,lineHeight:1.5}}>
       Bron: Rijkswaterstaat Waterinfo (ddapi20) · {rws.via==="proxy"?"live via proxy":`momentopname ${hhmm(rws.generated)}`}. LIVE = meting maximaal 3 uur oud, binnen 40 km; geen continue realtime verbinding. Golfhoogte niet getoond: geen betrouwbare live bron voor deze stations.
-    </div>
+    </div>}
   </div>;
 }
 
