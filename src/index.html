@@ -71,6 +71,19 @@ body{background:#e8eff1;color:#142f40;line-height:1.5}
 @media(max-width:380px){.nautical .app-header{padding:22px 16px 18px!important;gap:8px}.nautical .app-header h1{font-size:26px!important}.nautical .external-forecast{padding:15px}.nautical .app-main{padding-left:12px!important;padding-right:12px!important}.nautical .bottom-nav button{padding-left:5px!important;padding-right:5px!important}.nautical .section-heading>span:first-child{font-size:18px!important}}
 @media(prefers-reduced-motion:reduce){.nautical button{transition:none!important}}
 
+
+.brand-with-logo{display:flex;align-items:center;gap:12px;min-width:0}
+.windsurfer-icon{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;font-size:40px;line-height:1;flex-shrink:0}
+.windsurfer-icon-small{width:28px;height:28px;font-size:24px}
+.measurement-card{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:116px;padding:14px 16px;border-radius:16px;margin-bottom:12px}
+.measurement-copy{flex:1;min-width:0}.measurement-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.measurement-meta{font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.measurement-value{font-size:28px;font-weight:900;font-family:'JetBrains Mono',monospace;flex-shrink:0;text-align:right;line-height:1.15}
+.measurement-value>span{display:block;font-size:11px;font-weight:600;margin-top:5px}
+.live-status-led{width:9px;height:9px;border-radius:50%;background:#13864a;box-shadow:0 0 0 3px #13864a22;animation:rws-status 1.8s ease-in-out infinite;flex-shrink:0}
+@keyframes rws-status{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:380px){.windsurfer-icon:not(.windsurfer-icon-small){width:44px;height:44px;font-size:32px}.brand-with-logo{gap:8px}.measurement-card{padding:14px 12px;gap:10px}}
+@media(prefers-reduced-motion:reduce){.live-status-led{animation:none}}
 </style>
 </head><body>
 <noscript>Deze app heeft JavaScript nodig.</noscript>

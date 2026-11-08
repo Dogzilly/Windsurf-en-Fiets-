@@ -2,6 +2,8 @@
 import React,{useState,useEffect,createContext,useContext,useRef,useCallback,useMemo} from "react";
 import {createRoot} from "react-dom/client";
 import {WindForecasts} from "./wind-widgets.jsx";
+import {WindsurferIcon} from "./windsurfer-icon.jsx";
+import {validWindStatus} from "./live-status.js";
 import {VERSION} from "./version.js";
 import {circMean,dirInRange,hourOk,windClass,CLASS_LABEL,grp,pk,localParts,addDays,computeWindows,haversine,bearing,headwind,nearestStation,bikeIdx} from "./logic.js";
 import {RWS_STATIONS,RWS_BASE} from "./stations.js";
@@ -219,8 +221,8 @@ function App(){
   const oSpotDay=(s,day)=>{setSelSpot(s);setSelDay(day);go("detail");};
   const nPerfect=perfect.length;
   const TITLES={home:"Dashboard",spots:"Alle Spots",alerts:"Alerts",markt:"Marktplaats",kaart:"🗺️ Kaart",game:"🎮 Game",settings:"Instellingen",meer:"Meer",video:"Video's"};
-  const mainTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"settings",icon:"⚙️",l:"Settings"},{id:"meer",icon:"☰",l:"Meer"}];
-  const deskTabs=[{id:"home",icon:"⛵",l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
+  const mainTabs=[{id:"home",icon:<WindsurferIcon small/>,l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"settings",icon:"⚙️",l:"Settings"},{id:"meer",icon:"☰",l:"Meer"}];
+  const deskTabs=[{id:"home",icon:<WindsurferIcon small/>,l:"Home"},{id:"spots",icon:"📍",l:"Spots"},{id:"alerts",icon:"🔔",l:"Alerts",badge:nPerfect},{id:"kaart",icon:"🗺️",l:"Kaart"},{id:"markt",icon:"🛒",l:"Markt"},{id:"video",icon:"▶️",l:"Video's"},{id:"game",icon:"🎮",l:"Game"},{id:"settings",icon:"⚙️",l:"Settings"}];
   const inMeer=["markt","kaart","game","video","meer"].includes(view);
 
   const common={rws,minW,maxW,favDir,maxGust};
@@ -233,7 +235,7 @@ function App(){
 
     <header className="app-header" style={{padding:"16px 20px 8px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,position:"relative"}}>
       {view==="detail"?<button onClick={()=>go("home")} style={{background:t.btn,border:"none",color:t.text,borderRadius:12,padding:"8px 14px",fontSize:15,cursor:"pointer",fontFamily:"inherit"}}>← Terug</button>
-      :<div><div style={{fontSize:12,fontWeight:500,color:t.acc,letterSpacing:2.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:6}}>Windsurf en Fiets<span style={{fontSize:10,fontWeight:700,background:`${t.acc}22`,color:t.acc,borderRadius:6,padding:"1px 6px",letterSpacing:0.5}}>v{VERSION}</span></div><h1 style={{fontSize:24,fontWeight:800,letterSpacing:-0.5,marginTop:2,margin:0}}>{TITLES[view]||""}</h1></div>}
+      :<div className="brand-with-logo"><WindsurferIcon/><div><div style={{fontSize:12,fontWeight:500,color:t.acc,letterSpacing:2.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:6}}>Windsurf en Fiets<span style={{fontSize:10,fontWeight:700,background:`${t.acc}22`,color:t.acc,borderRadius:6,padding:"1px 6px",letterSpacing:0.5}}>v{VERSION}</span></div><h1 style={{fontSize:24,fontWeight:800,letterSpacing:-0.5,marginTop:2,margin:0}}>{TITLES[view]||""}</h1></div></div>}
       {isDesk&&view!=="detail"&&<nav className="desktop-nav" aria-label="Hoofdmenu" style={{display:"flex",gap:4,flexWrap:"wrap",justifyContent:"center",flex:1}}>
         {deskTabs.map(tb=><button key={tb.id} onClick={()=>go(tb.id)} aria-current={view===tb.id?"page":undefined} style={{background:view===tb.id?t.btnA:"transparent",border:`1px solid ${view===tb.id?t.btnAB:"transparent"}`,color:view===tb.id?t.acc:t.ts,borderRadius:12,padding:"8px 12px",cursor:"pointer",fontFamily:"inherit",fontSize:14,fontWeight:600,position:"relative"}}>{tb.icon} {tb.l}{tb.badge>0&&<span style={{marginLeft:6,background:t.badBg,color:t.badT,fontSize:10,fontWeight:800,borderRadius:10,padding:"1px 6px"}}>{tb.badge}</span>}</button>)}
       </nav>}
@@ -1707,28 +1709,32 @@ function Alerts({alerts,perfect,oSpot,favDir,maxGust,minHours}){const t=useT();c
 // ── RWS LIVE BLOCK: dichtstbijzijnde verse RWS-meting ──
 function LiveBlock({spot,rws,minW,maxW}){
   const t=useT();
-  const ws=rws?nearSt(spot,rws,"wind"):null;
-  const ts=rws?nearSt(spot,rws,"temp"):null;
+  const [now,setNow]=useState(Date.now);
+  useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(timer)},[]);
+  const found=rws?nearSt(spot,rws,"wind",{now}):null;
+  const ws=validWindStatus(found,now)?found:null;
+  const ts=rws?nearSt(spot,rws,"temp",{now}):null;
   if(!ws&&!ts)return<Em t="Geen verse RWS-meting binnen 40 km — zie Prognose (model)."/>;
   const kn=ws?ms2kn(ws.wind_ms):null;const q=kn!=null?wc(kn,t):null;
-  const ageMin=ws?Math.round((Date.now()-new Date(ws.wind_ts))/60000):null;
-  return(<div>
-    {ws&&<div style={{background:q.bg,border:`1px solid ${q.color}33`,borderRadius:20,padding:"22px 20px",marginBottom:12,textAlign:"center"}}>
-      <div style={{display:"flex",justifyContent:"center",marginBottom:8}}><SrcBadge live/></div>
-      <div style={{fontSize:56,fontWeight:900,color:q.color,lineHeight:1,fontFamily:"JetBrains Mono"}}>{Math.round(kn)}</div>
-      <div style={{fontSize:15,color:t.ts,marginTop:4}}>knopen (10-min gemiddelde) · <b style={{color:q.color}}>{bft(kn)} Bft</b></div>
-      <div style={{display:"inline-block",marginTop:10,padding:"4px 14px",background:`${q.color}22`,borderRadius:20,color:q.color,fontSize:14,fontWeight:700}}>{q.label}</div>
-      {ws.dir!=null&&<div style={{marginTop:14,display:"flex",justifyContent:"center",alignItems:"center",gap:10}}><CArrow deg={ws.dir} size={30} color={q.color}/><span style={{fontSize:15,fontWeight:700}}>{d2d(ws.dir)} · {Math.round(ws.dir)}°</span></div>}
-      <div style={{fontSize:12,color:t.tm,marginTop:12}}>📍 RWS-station <b>{ws.naam}</b> · {ws.km.toFixed(1)} km van de spot<br/>gemeten {hhmm(ws.wind_ts)} ({ageMin} min geleden)</div>
+  const ageMin=ws?Math.round((now-new Date(ws.wind_ts))/60000):null;
+  return <div>
+    {ws&&<div className="measurement-card" style={{background:t.card,border:`1px solid ${t.cb}`,color:t.text}}>
+      <div className="measurement-copy">
+        <div className="measurement-title"><span className="live-status-led" aria-hidden="true"/> LIVE · Wind</div>
+        <div className="measurement-meta" style={{color:t.ts}}>10-min gemiddelde · {q.label}</div>
+        {ws.dir!=null&&<div className="measurement-meta" style={{color:t.ts}}>{d2d(ws.dir)} · {Math.round(ws.dir)}°</div>}
+        <div className="measurement-meta" style={{color:t.ts}}>{ws.naam} · {ws.km.toFixed(1)} km · {hhmm(ws.wind_ts)} ({ageMin} min geleden)</div>
+      </div>
+      <div className="measurement-value" style={{color:q.color}}>{Math.round(kn)}<span>kn · {bft(kn)} Bft</span></div>
     </div>}
-    {ts&&<div style={{background:t.card,border:`1px solid ${t.cb}`,borderRadius:16,padding:"14px 16px",marginBottom:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-      <div><div style={{fontSize:14,fontWeight:700}}>🌡️ Watertemperatuur</div><div style={{fontSize:12,color:t.tm}}>{ts.naam} · {ts.km.toFixed(1)} km · {hhmm(ts.temp_ts)}</div></div>
-      <div style={{fontSize:28,fontWeight:900,fontFamily:"JetBrains Mono",color:t.acc}}>{ts.temp.toFixed(1)}°</div>
+    {ts&&<div className="measurement-card" style={{background:t.card,border:`1px solid ${t.cb}`,color:t.text}}>
+      <div className="measurement-copy"><div className="measurement-title">🌡️ Watertemperatuur</div><div className="measurement-meta" style={{color:t.ts}}>{ts.naam} · {ts.km.toFixed(1)} km · {hhmm(ts.temp_ts)}</div></div>
+      <div className="measurement-value" style={{color:t.acc}}>{ts.temp.toFixed(1)}<span>°C</span></div>
     </div>}
-    <div style={{padding:"8px 12px",background:t.ch,borderRadius:10,fontSize:10,color:t.tf,lineHeight:1.5}}>
-      Bron: Rijkswaterstaat Waterinfo (ddapi20) · {rws.via==="proxy"?"live via proxy":`momentopname ${hhmm(rws.generated)}`}. Golfhoogte niet getoond: geen betrouwbare live bron gevonden voor deze stations.
+    <div style={{padding:"8px 12px",background:t.ch,borderRadius:10,fontSize:11,color:t.ts,lineHeight:1.5}}>
+      Bron: Rijkswaterstaat Waterinfo (ddapi20) · {rws.via==="proxy"?"live via proxy":`momentopname ${hhmm(rws.generated)}`}. LIVE = meting maximaal 3 uur oud, binnen 40 km; geen continue realtime verbinding. Golfhoogte niet getoond: geen betrouwbare live bron voor deze stations.
     </div>
-  </div>);
+  </div>;
 }
 
 function Detail({spot,data,selDay,setSelDay,minW,maxW,rws,favDir,maxGust:gustLim}){const t=useT();
