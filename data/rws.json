@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-27T22:37:20.823Z",
+ "generated": "2026-11-28T04:12:31.726Z",
  "source": "Rijkswaterstaat ddapi20 OphalenLaatsteWaarnemingen",
  "stations": [
   {
@@ -7,27 +7,27 @@
    "naam": "Andijk",
    "lat": 52.7503,
    "lon": 5.265,
-   "temp": 0.9,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "temp": 1.2,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "haringvliet.3",
    "naam": "Haringvliet, Kier3",
    "lat": 51.826,
    "lon": 4.0512,
-   "temp": 5.6,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "temp": 5.7,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "hoekvanholland",
    "naam": "Hoek van Holland",
    "lat": 51.9769,
    "lon": 4.1198,
-   "wind_ms": 4.66,
-   "wind_ts": "2026-11-27T23:10:00.000+01:00",
-   "dir": 102.8,
-   "temp": 7.3,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "wind_ms": 6.57,
+   "wind_ts": "2026-11-28T04:40:00.000+01:00",
+   "dir": 141.2,
+   "temp": 8.8,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "ijgeul.1",
@@ -35,7 +35,7 @@
    "lat": 52.4639,
    "lon": 4.5176,
    "wind_ms": 0,
-   "wind_ts": "2026-11-27T23:20:00.000+01:00"
+   "wind_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "ijmuiden.buitenhaven",
@@ -43,81 +43,81 @@
    "lat": 52.463,
    "lon": 4.555,
    "temp": 7.9,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "ijmuiden.havenhoofd.zuid",
    "naam": "IJmuiden, havenhoofd zuid",
    "lat": 52.4637,
    "lon": 4.5323,
-   "wind_ms": 2.74,
-   "wind_ts": "2026-11-27T23:20:00.000+01:00",
-   "dir": 118.3
+   "wind_ms": 5.05,
+   "wind_ts": "2026-11-28T04:50:00.000+01:00",
+   "dir": 129.8
   },
   {
    "code": "kamperland.schotsman",
    "naam": "Kamperland, Schotsman",
    "lat": 51.5816,
    "lon": 3.6433,
-   "temp": 5.7,
-   "temp_ts": "2026-11-27T23:20:00.000+01:00"
+   "temp": 5.5,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "kats.zandkreeksluis.buiten",
    "naam": "Kats Zandkreeksluis buiten",
    "lat": 51.544,
    "lon": 3.8592,
-   "wind_ms": 4.03,
-   "wind_ts": "2026-11-27T23:20:00.000+01:00",
-   "dir": 112.5
+   "wind_ms": 2.7,
+   "wind_ts": "2026-11-28T04:50:00.000+01:00",
+   "dir": 125.2
   },
   {
    "code": "kornwerderzand.ijsselmeer.vaargeul",
    "naam": "Kornwerderzand IJsselmeer vaargeul",
    "lat": 53.0487,
    "lon": 5.3448,
-   "temp": 3.2,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "temp": 2.9,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "markermeer.midden",
    "naam": "Markermeer, midden",
    "lat": 52.5317,
    "lon": 5.2312,
-   "wind_ms": 6.66,
-   "wind_ts": "2026-11-27T23:10:00.000+01:00",
-   "dir": 125.8
+   "wind_ms": 6.99,
+   "wind_ts": "2026-11-28T04:50:00.000+01:00",
+   "dir": 135.9
   },
   {
    "code": "rotterdamsehoek.ijsselmeer",
    "naam": "Rotterdamsehoek IJsselmeer",
    "lat": 52.7487,
    "lon": 5.552,
-   "wind_ms": 5.77,
-   "wind_ts": "2026-11-27T23:20:00.000+01:00",
-   "dir": 108.3,
-   "temp": 3.1,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "wind_ms": 6.33,
+   "wind_ts": "2026-11-28T04:50:00.000+01:00",
+   "dir": 114.7,
+   "temp": 3.2,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   },
   {
    "code": "stellendam.haringvlietsluizen.schuif1",
    "naam": "Stellendam, Haringvlietsluizen",
    "lat": 51.8362,
    "lon": 4.0544,
-   "wind_ms": 5.3,
-   "wind_ts": "2026-11-27T23:10:00.000+01:00",
-   "dir": 109
+   "wind_ms": 6.6,
+   "wind_ts": "2026-11-28T04:50:00.000+01:00",
+   "dir": 132
   },
   {
    "code": "vlissingen",
    "naam": "Vlissingen",
    "lat": 51.442,
    "lon": 3.6,
-   "wind_ms": 7.89,
-   "wind_ts": "2026-11-27T23:00:00.000+01:00",
-   "dir": 117.1,
-   "temp": 7.1,
-   "temp_ts": "2026-11-27T23:10:00.000+01:00"
+   "wind_ms": 6.82,
+   "wind_ts": "2026-11-28T04:40:00.000+01:00",
+   "dir": 143.3,
+   "temp": 7.4,
+   "temp_ts": "2026-11-28T04:50:00.000+01:00"
   }
  ]
 }
